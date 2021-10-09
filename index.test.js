@@ -53,6 +53,14 @@ test('where above', () => {
     expect(result).toEqual([data[3]])
 })
 
+test('where above or equal', () => {
+    const result = query(data)
+        .where('id').aboveOrEqual(2)
+        .get()
+
+    expect(result).toEqual([data[2], data[3]])
+})
+
 test('where below', () => {
     const result = query(data)
         .where('id').below(2)

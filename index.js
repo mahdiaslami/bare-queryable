@@ -53,6 +53,10 @@ function where(query, column, or = false) {
             return this._filter((row) => row[column] > value)
         },
 
+        aboveOrEqual(value) {
+            return this._filter((row) => row[column] >= value)
+        },
+
         below(value) {
             return this._filter((row) => row[column] < value)
         },
