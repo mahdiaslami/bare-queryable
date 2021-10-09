@@ -13,6 +13,10 @@ function query(array, conditionFn = null) {
             return this._data
         },
 
+        first() {
+            return this.get()[0]
+        },
+
         where(column) {
             return where(this, column)
         },

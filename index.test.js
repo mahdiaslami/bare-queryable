@@ -27,6 +27,12 @@ test('get all data', () => {
     expect(result).toEqual(data)
 })
 
+test('get first item', () => {
+    const result = query(data).first()
+
+    expect(result).toEqual(data[0])
+})
+
 test('where equal', () => {
     const result = query(data).where('id').equal(2).get()
 
