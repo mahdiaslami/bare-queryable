@@ -33,6 +33,12 @@ test('get first item', () => {
     expect(result).toEqual(data[0])
 })
 
+test('get last item', () => {
+    const result = query(data).last()
+
+    expect(result).toEqual(data[3])
+})
+
 test('where equal', () => {
     const result = query(data).where('id').equal(2).get()
 

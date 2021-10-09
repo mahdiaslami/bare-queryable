@@ -17,6 +17,10 @@ function query(array, conditionFn = null) {
             return this.get()[0]
         },
 
+        last() {
+            return this.get()[this._data.length - 1]
+        },
+
         where(column) {
             return where(this, column)
         },
