@@ -61,6 +61,10 @@ function where(query, column, or = false) {
             return this._filter((row) => row[column] < value)
         },
 
+        belowOrEqual(value) {
+            return this._filter((row) => row[column] <= value)
+        },
+
         contain(value) {
             return this._filter((row) => row[column].includes(value))
         },

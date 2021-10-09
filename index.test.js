@@ -69,6 +69,14 @@ test('where below', () => {
     expect(result).toEqual([data[0], data[1]])
 })
 
+test('where below or equal', () => {
+    const result = query(data)
+        .where('id').belowOrEqual(1)
+        .get()
+
+    expect(result).toEqual([data[0], data[1]])
+})
+
 test('where in', () => {
     const result = query(data)
         .where('id').in([1, 3])
