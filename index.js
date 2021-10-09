@@ -13,6 +13,14 @@ function query(array, conditionFn = null) {
             return this._data
         },
 
+        first() {
+            return this.get()[0]
+        },
+
+        last() {
+            return this.get()[this._data.length - 1]
+        },
+
         where(column) {
             return where(this, column)
         },
@@ -45,8 +53,16 @@ function where(query, column, or = false) {
             return this._filter((row) => row[column] > value)
         },
 
+        aboveOrEqual(value) {
+            return this._filter((row) => row[column] >= value)
+        },
+
         below(value) {
             return this._filter((row) => row[column] < value)
+        },
+
+        belowOrEqual(value) {
+            return this._filter((row) => row[column] <= value)
         },
 
         contain(value) {

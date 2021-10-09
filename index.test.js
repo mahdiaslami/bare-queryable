@@ -27,6 +27,18 @@ test('get all data', () => {
     expect(result).toEqual(data)
 })
 
+test('get first item', () => {
+    const result = query(data).first()
+
+    expect(result).toEqual(data[0])
+})
+
+test('get last item', () => {
+    const result = query(data).last()
+
+    expect(result).toEqual(data[3])
+})
+
 test('where equal', () => {
     const result = query(data).where('id').equal(2).get()
 
@@ -41,9 +53,25 @@ test('where above', () => {
     expect(result).toEqual([data[3]])
 })
 
+test('where above or equal', () => {
+    const result = query(data)
+        .where('id').aboveOrEqual(2)
+        .get()
+
+    expect(result).toEqual([data[2], data[3]])
+})
+
 test('where below', () => {
     const result = query(data)
         .where('id').below(2)
+        .get()
+
+    expect(result).toEqual([data[0], data[1]])
+})
+
+test('where below or equal', () => {
+    const result = query(data)
+        .where('id').belowOrEqual(1)
         .get()
 
     expect(result).toEqual([data[0], data[1]])
