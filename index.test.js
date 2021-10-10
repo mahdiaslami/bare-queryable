@@ -1,6 +1,4 @@
-require('jest')
-
-const query = require('./index.js')
+import query from './index.js'
 
 const data = [
     {

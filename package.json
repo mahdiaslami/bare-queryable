@@ -2,6 +2,7 @@
   "name": "bare-queryable",
   "version": "1.0.0",
   "description": "Query on array.",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -18,6 +19,19 @@
   "author": "Mahdi Aslami Khavari <mahdyaslami@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/node": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
     "jest": "^27.2.5"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "mjs"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.mjs$": "babel-jest"
+    }
   }
 }
