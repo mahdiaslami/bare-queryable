@@ -154,5 +154,5 @@ function now() {
 }
 
 function hash(length = 5) {
-    return (Math.random() + 1).toString(36).substringl(length)
+    return (Math.random() + 1).toString(36).substring(length)
 }
