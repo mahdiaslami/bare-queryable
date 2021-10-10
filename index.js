@@ -87,4 +87,4 @@ function where(query, column, or = false) {
     }
 }
 
-module.exports = query
+export default query

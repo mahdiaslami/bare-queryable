@@ -1,6 +1,4 @@
-require('jest')
-
-const query = require('./index.js')
+import query from './index.js'
 
 const data = [
     {
@@ -154,5 +152,5 @@ function now() {
 }
 
 function hash(length = 5) {
-    return (Math.random() + 1).toString(36).substringl(length)
+    return (Math.random() + 1).toString(36).substring(length)
 }
