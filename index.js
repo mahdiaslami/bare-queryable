@@ -6,19 +6,15 @@ function query(array) {
         _filter: null,
 
         get() {
-            if (this._filter) {
-                return this._data.filter(this._filter)
-            }
-
-            return this._data
+            return this.do(data => data)
         },
 
         first() {
-            return this.get()[0]
+            return this.do(data => data[0])
         },
 
         last() {
-            return this.get()[this._data.length - 1]
+            return this.do(data => data[data.length - 1])
         },
 
         do(callback) {
