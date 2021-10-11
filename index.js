@@ -22,11 +22,11 @@ function query(array) {
         },
 
         where(column) {
-            return where(this, column, and(this.getFilter()))
+            return where(column, this, and(this.getFilter()))
         },
 
         orWhere(column) {
-            return where(this, column, or(this.getFilter()))
+            return where(column, this, or(this.getFilter()))
         },
 
         setFilter(filter) {

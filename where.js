@@ -1,5 +1,5 @@
 
-function where(query, column, chain) {
+function where(column, query, chain) {
     return {
         equal(value) {
             return this._filter((row) => row[column] == value)
