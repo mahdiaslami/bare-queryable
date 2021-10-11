@@ -21,6 +21,20 @@ function query(array) {
             return this.get()[this._data.length - 1]
         },
 
+        do(callback) {
+            return callback(
+                this.filter()(this._data)
+            )
+        },
+
+        filter() {
+            if (this._filter) {
+                return data => data.filter(this._filter)
+            }
+
+            return data => data
+        },
+
         where(column) {
             return where(column, this, and(this.getFilter()))
         },
