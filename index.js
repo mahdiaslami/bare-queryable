@@ -1,9 +1,9 @@
 import where from './where.js'
 
-function query(array, filter = null) {
+function query(array) {
     return {
         _data: array,
-        _filter: filter,
+        _filter: null,
 
         get() {
             if (this._filter) {
@@ -22,24 +22,36 @@ function query(array, filter = null) {
         },
 
         where(column) {
-            return where(this, column)
+            return where(this, column, and(this.getFilter()))
         },
 
         orWhere(column) {
-            return where(this, column, true)
+            return where(this, column, or(this.getFilter()))
         },
 
-        newInstance(filter) {
-            return query(this._data, filter)
+        setFilter(filter) {
+            this._filter = filter
         },
 
-        callFilter(row) {
-            if (this._filter) {
-                return this._filter(row)
-            }
+        getFilter() {
+            return this._filter ?? (() => true)
+        }
+    }
+}
 
-            return true
-        },
+function and(firstCallback) {
+    return {
+        with(secondCallback) {
+            return (row) => firstCallback(row) && secondCallback(row)
+        }
+    }
+}
+
+function or(firstCallback) {
+    return {
+        with(secondCallback) {
+            return (row) => firstCallback(row) || secondCallback(row)
+        }
     }
 }
 

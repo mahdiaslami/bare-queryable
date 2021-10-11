@@ -1,5 +1,5 @@
 
-function where(query, column, or = false) {
+function where(query, column, chain) {
     return {
         equal(value) {
             return this._filter((row) => row[column] == value)
@@ -30,15 +30,11 @@ function where(query, column, or = false) {
         },
 
         _filter(conditionFn) {
-            let newConditionFn = null
+            query.setFilter(
+                chain.with(conditionFn)
+            )
 
-            if (or) {
-                newConditionFn = (row) => query.callFilter(row) || conditionFn(row)
-            } else {
-                newConditionFn = (row) => query.callFilter(row) && conditionFn(row)
-            }
-
-            return query.newInstance(newConditionFn)
+            return query
         },
     }
 }
