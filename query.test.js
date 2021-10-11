@@ -1,23 +1,5 @@
 import query from './query.js'
-
-const data = [
-    {
-        id: 0,
-        name: 'aaaa'
-    },
-    {
-        id: 1,
-        name: 'abaa'
-    },
-    {
-        id: 2,
-        name: 'aaca'
-    },
-    {
-        id: 3,
-        name: 'aaad'
-    }
-]
+import { data, factory, now } from './fake.js'
 
 test('get all data', () => {
     const result = query(data).get()
@@ -133,24 +115,3 @@ test('query on 10000 obj be less than 50ms', () => {
 
     expect(end - start).toBeLessThan(50)
 })
-
-function factory(count) {
-    const array = []
-
-    for (let i = 1; i <= count; i++) {
-        array.push({
-            id: i,
-            name: hash()
-        })
-    }
-
-    return array
-}
-
-function now() {
-    return (new Date).getTime()
-}
-
-function hash(length = 5) {
-    return (Math.random() + 1).toString(36).substring(length)
-}

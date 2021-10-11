@@ -1,23 +1,5 @@
 import query from './async-query'
-
-const data = [
-    {
-        id: 0,
-        name: 'aaaa'
-    },
-    {
-        id: 1,
-        name: 'abaa'
-    },
-    {
-        id: 2,
-        name: 'aaca'
-    },
-    {
-        id: 3,
-        name: 'aaad'
-    }
-]
+import { data } from './fake.js'
 
 const promise = new Promise((resolve) => resolve(data))
 
@@ -52,6 +34,6 @@ test('query with condition', () => {
     query(promise)
         .where('id').equal(0)
         .get().then(result => {
-            expect(result).toBeEqual([data[0]])
+            expect(result).toEqual([data[0]])
         })
 })
