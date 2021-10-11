@@ -1,9 +1,9 @@
 import where from './where.js'
 
-function query(array, conditionFn = null) {
+function query(array, filter = null) {
     return {
         _data: array,
-        _filter: conditionFn,
+        _filter: filter,
 
         get() {
             if (this._filter) {
@@ -29,11 +29,11 @@ function query(array, conditionFn = null) {
             return where(this, column, true)
         },
 
-        newInstance(conditionFn) {
-            return query(this._data, conditionFn)
+        newInstance(filter) {
+            return query(this._data, filter)
         },
 
-        callConditionFn(row) {
+        callFilter(row) {
             if (this._filter) {
                 return this._filter(row)
             }

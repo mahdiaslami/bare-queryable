@@ -33,9 +33,9 @@ function where(query, column, or = false) {
             let newConditionFn = null
 
             if (or) {
-                newConditionFn = (row) => query.callConditionFn(row) || conditionFn(row)
+                newConditionFn = (row) => query.callFilter(row) || conditionFn(row)
             } else {
-                newConditionFn = (row) => query.callConditionFn(row) && conditionFn(row)
+                newConditionFn = (row) => query.callFilter(row) && conditionFn(row)
             }
 
             return query.newInstance(newConditionFn)
