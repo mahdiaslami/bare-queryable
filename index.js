@@ -1,13 +1,13 @@
+import { where, and, or } from './condition.js'
 
-
-function query(array, conditionFn = null) {
+function query(array) {
     return {
         _data: array,
-        _conditionFn: conditionFn,
+        _filter: null,
 
         get() {
-            if (this._conditionFn) {
-                return this._data.filter(this._conditionFn)
+            if (this._filter) {
+                return this._data.filter(this._filter)
             }
 
             return this._data
@@ -22,68 +22,20 @@ function query(array, conditionFn = null) {
         },
 
         where(column) {
-            return where(this, column)
+            return where(column, this, and(this.getFilter()))
         },
 
         orWhere(column) {
-            return where(this, column, true)
+            return where(column, this, or(this.getFilter()))
         },
 
-        newInstance(conditionFn) {
-            return query(this._data, conditionFn)
+        setFilter(filter) {
+            this._filter = filter
         },
 
-        callConditionFn(row) {
-            if (this._conditionFn) {
-                return this._conditionFn(row)
-            }
-
-            return true
-        },
-    }
-}
-
-function where(query, column, or = false) {
-    return {
-        equal(value) {
-            return this._filter((row) => row[column] == value)
-        },
-
-        above(value) {
-            return this._filter((row) => row[column] > value)
-        },
-
-        aboveOrEqual(value) {
-            return this._filter((row) => row[column] >= value)
-        },
-
-        below(value) {
-            return this._filter((row) => row[column] < value)
-        },
-
-        belowOrEqual(value) {
-            return this._filter((row) => row[column] <= value)
-        },
-
-        contain(value) {
-            return this._filter((row) => row[column].includes(value))
-        },
-
-        in(array) {
-            return this._filter((row) => array.includes(row[column]))
-        },
-
-        _filter(conditionFn) {
-            let newConditionFn = null
-
-            if (or) {
-                newConditionFn = (row) => query.callConditionFn(row) || conditionFn(row)
-            } else {
-                newConditionFn = (row) => query.callConditionFn(row) && conditionFn(row)
-            }
-
-            return query.newInstance(newConditionFn)
-        },
+        getFilter() {
+            return this._filter ?? (() => true)
+        }
     }
 }
 
