@@ -3,11 +3,11 @@ import where from './where.js'
 function query(array, conditionFn = null) {
     return {
         _data: array,
-        _conditionFn: conditionFn,
+        _filter: conditionFn,
 
         get() {
-            if (this._conditionFn) {
-                return this._data.filter(this._conditionFn)
+            if (this._filter) {
+                return this._data.filter(this._filter)
             }
 
             return this._data
@@ -34,8 +34,8 @@ function query(array, conditionFn = null) {
         },
 
         callConditionFn(row) {
-            if (this._conditionFn) {
-                return this._conditionFn(row)
+            if (this._filter) {
+                return this._filter(row)
             }
 
             return true
