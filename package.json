@@ -1,19 +1,37 @@
 {
-  "name": "query-on-array",
-  "version": "1.0.0",
+  "name": "bare-queryable",
+  "version": "1.1.0",
   "description": "Query on array.",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "watch": "jest --watch"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mahdyaslami/query-on-array.git"
+    "url": "https://github.com/mahdyaslami/bare-queryable.git"
   },
   "keywords": [
     "query",
     "array"
   ],
   "author": "Mahdi Aslami Khavari <mahdyaslami@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/node": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "jest": "^27.2.5"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "mjs"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.mjs$": "babel-jest"
+    }
+  }
 }
