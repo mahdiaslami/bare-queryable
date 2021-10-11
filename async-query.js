@@ -1,6 +1,6 @@
 import { where, and, or } from './condition.js'
 
-function query(promise) {
+function asyncQuery(promise) {
     return {
         promise: promise,
         _filter: null,
@@ -47,4 +47,4 @@ function query(promise) {
     }
 }
 
-export default query
+export default asyncQuery
