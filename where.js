@@ -29,9 +29,9 @@ function where(query, column, chain) {
             return this._filter((row) => array.includes(row[column]))
         },
 
-        _filter(conditionFn) {
+        _filter(callback) {
             query.setFilter(
-                chain.with(conditionFn)
+                chain.with(callback)
             )
 
             return query
