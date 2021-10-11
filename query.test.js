@@ -1,4 +1,4 @@
-import query from './index.js'
+import query from './query.js'
 
 const data = [
     {
