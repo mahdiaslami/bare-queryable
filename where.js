@@ -1,5 +1,5 @@
 
-function where(column, query, chain) {
+export function where(column, query, chain) {
     return {
         equal(value) {
             return this._filter((row) => row[column] == value)
@@ -39,4 +39,19 @@ function where(column, query, chain) {
     }
 }
 
-export default where
+
+export function and(firstCallback) {
+    return {
+        with(secondCallback) {
+            return (row) => firstCallback(row) && secondCallback(row)
+        }
+    }
+}
+
+export function or(firstCallback) {
+    return {
+        with(secondCallback) {
+            return (row) => firstCallback(row) || secondCallback(row)
+        }
+    }
+}

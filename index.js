@@ -1,4 +1,4 @@
-import where from './where.js'
+import { where, and, or } from './where.js'
 
 function query(array) {
     return {
@@ -35,22 +35,6 @@ function query(array) {
 
         getFilter() {
             return this._filter ?? (() => true)
-        }
-    }
-}
-
-function and(firstCallback) {
-    return {
-        with(secondCallback) {
-            return (row) => firstCallback(row) && secondCallback(row)
-        }
-    }
-}
-
-function or(firstCallback) {
-    return {
-        with(secondCallback) {
-            return (row) => firstCallback(row) || secondCallback(row)
         }
     }
 }
