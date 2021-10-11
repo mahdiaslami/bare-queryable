@@ -1,3 +1,7 @@
 import query from './query'
+import asyncQuery from './async-query'
 
-export default query
+export {
+    query,
+    asyncQuery
+}
