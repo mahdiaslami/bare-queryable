@@ -1,17 +1,17 @@
 import query from './query.js'
 
 function asyncQuery(promise) {
-    const parent = query()
+    const q = query()
 
-    parent.promise = promise
+    q.promise = promise
 
-    parent.prepareResult = function () {
+    q._prepareResult = function () {
         return this.promise
-            .then(data => this.filter(data))
-            .then(data => this.limit(data))
+            .then(data => this._filter(data))
+            .then(data => this._limit(data))
     }
 
-    return parent
+    return q
 }
 
 export default asyncQuery
