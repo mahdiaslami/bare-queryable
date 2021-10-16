@@ -1,5 +1,5 @@
 
-export function where(column, returnValue) {
+export default function where(column, returnValue) {
     return {
         equal(value) {
             this.callback = (row) => row[column] == value

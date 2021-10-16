@@ -1,4 +1,4 @@
-import { where } from './condition.js'
+import where from './where.js'
 
 function query(array) {
     return {
