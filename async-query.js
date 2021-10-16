@@ -5,8 +5,10 @@ function asyncQuery(promise) {
 
     parent.promise = promise
 
-    parent.do = function (callback) {
-        return this.promise.then(this.filter()).then(callback)
+    parent.prepareResult = function () {
+        return this.promise
+            .then(data => this.filter(data))
+            .then(data => this.limit(data))
     }
 
     return parent

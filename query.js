@@ -4,31 +4,44 @@ function query(array) {
     return {
         _data: array,
         _filterCallback: null,
+        _limitCallback: null,
 
         get() {
-            return this.do(data => data)
+            return this.prepareResult()
         },
 
         first() {
-            return this.do(data => data[0])
+            this._limitCallback = data => data[0]
+
+            return this.prepareResult()
         },
 
         last() {
-            return this.do(data => data[data.length - 1])
+            this._limitCallback = data => data[data.length - 1]
+
+            return this.prepareResult()
         },
 
-        do(callback) {
-            return callback(
-                this.filter()(this._data)
-            )
+        prepareResult() {
+            const result = this.filter(this._data)
+
+            return this.limit(result)
         },
 
-        filter() {
+        filter(data) {
             if (this._filterCallback) {
-                return data => data.filter(this._filterCallback)
+                return data.filter(this._filterCallback)
             }
 
-            return data => data
+            return data
+        },
+
+        limit(data) {
+            if (this._limitCallback) {
+                return this._limitCallback(data)
+            }
+
+            return data
         },
 
         where(column) {
