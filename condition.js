@@ -2,39 +2,57 @@
 export function where(column, query, chain) {
     return {
         equal(value) {
-            return this._filter((row) => row[column] == value)
+            this.callback = (row) => row[column] == value
+
+            return this._filter()
         },
 
         above(value) {
-            return this._filter((row) => row[column] > value)
+            this.callback = (row) => row[column] > value
+
+            return this._filter()
         },
 
         aboveOrEqual(value) {
-            return this._filter((row) => row[column] >= value)
+            this.callback = (row) => row[column] >= value
+
+            return this._filter()
         },
 
         below(value) {
-            return this._filter((row) => row[column] < value)
+            this.callback = (row) => row[column] < value
+
+            return this._filter()
         },
 
         belowOrEqual(value) {
-            return this._filter((row) => row[column] <= value)
+            this.callback = (row) => row[column] <= value
+
+            return this._filter()
         },
 
         contain(value) {
-            return this._filter((row) => row[column].includes(value))
+            this.callback = (row) => row[column].includes(value)
+
+            return this._filter()
         },
 
         in(array) {
-            return this._filter((row) => array.includes(row[column]))
+            this.callback = (row) => array.includes(row[column])
+
+            return this._filter()
         },
 
-        _filter(callback) {
+        _filter() {
             query.setFilter(
-                chain.with(callback)
+                chain.with(this)
             )
 
             return query
+        },
+
+        call(row) {
+            return this.callback(row)
         },
     }
 }
@@ -43,7 +61,7 @@ export function where(column, query, chain) {
 export function and(firstCallback) {
     return {
         with(secondCallback) {
-            return (row) => firstCallback(row) && secondCallback(row)
+            return (row) => firstCallback(row) && secondCallback.call(row)
         }
     }
 }
@@ -51,7 +69,7 @@ export function and(firstCallback) {
 export function or(firstCallback) {
     return {
         with(secondCallback) {
-            return (row) => firstCallback(row) || secondCallback(row)
+            return (row) => firstCallback(row) || secondCallback.call(row)
         }
     }
 }
