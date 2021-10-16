@@ -1,9 +1,9 @@
-import { where, and, or } from './condition.js'
+import where from './where.js'
 
 function query(array) {
     return {
         _data: array,
-        _filter: null,
+        _filterCallback: null,
 
         get() {
             return this.do(data => data)
@@ -24,27 +24,43 @@ function query(array) {
         },
 
         filter() {
-            if (this._filter) {
-                return data => data.filter(this._filter)
+            if (this._filterCallback) {
+                return data => data.filter(this._filterCallback)
             }
 
             return data => data
         },
 
         where(column) {
-            return where(column, this, and(this.getFilter()))
+            const whereClause = where(column, this)
+
+            this.and(whereClause)
+
+            return whereClause
+        },
+
+        and(whereClause) {
+            const first = this.getFilter()
+
+            this._filterCallback = (row) => first(row) && whereClause.call(row)
         },
 
         orWhere(column) {
-            return where(column, this, or(this.getFilter()))
+            const whereClause = where(column, this)
+
+            this.or(whereClause)
+
+            return whereClause
         },
 
-        setFilter(filter) {
-            this._filter = filter
+        or(whereClause) {
+            const first = this.getFilter()
+
+            this._filterCallback = (row) => first(row) || whereClause.call(row)
         },
 
         getFilter() {
-            return this._filter ?? (() => true)
+            return this._filterCallback ?? (() => true)
         }
     }
 }
