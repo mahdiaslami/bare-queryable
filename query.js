@@ -19,16 +19,16 @@ function query(array) {
 
         do(callback) {
             return callback(
-                this.filter()(this._data)
+                this.filter(this._data)
             )
         },
 
-        filter() {
+        filter(data) {
             if (this._filterCallback) {
-                return data => data.filter(this._filterCallback)
+                return data.filter(this._filterCallback)
             }
 
-            return data => data
+            return data
         },
 
         where(column) {
