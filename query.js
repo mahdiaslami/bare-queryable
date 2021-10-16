@@ -7,22 +7,22 @@ function query(array) {
         _limitCallback: null,
 
         get() {
-            return this.prepareResult()
+            return this._prepareResult()
         },
 
         first() {
             this._limitCallback = data => data[0]
 
-            return this.prepareResult()
+            return this._prepareResult()
         },
 
         last() {
             this._limitCallback = data => data[data.length - 1]
 
-            return this.prepareResult()
+            return this._prepareResult()
         },
 
-        prepareResult() {
+        _prepareResult() {
             const result = this.filter(this._data)
 
             return this.limit(result)
