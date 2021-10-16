@@ -32,11 +32,23 @@ function query(array) {
         },
 
         where(column) {
-            return where(column, this, and(this.getFilter()))
+            const whereClause = where(column, this)
+
+            this.setFilter(
+                and(this.getFilter()).with(whereClause)
+            )
+
+            return whereClause
         },
 
         orWhere(column) {
-            return where(column, this, or(this.getFilter()))
+            const whereClause = where(column, this)
+
+            this.setFilter(
+                or(this.getFilter()).with(whereClause)
+            )
+
+            return whereClause
         },
 
         setFilter(filter) {

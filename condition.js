@@ -1,5 +1,5 @@
 
-export function where(column, query, chain) {
+export function where(column, query) {
     return {
         equal(value) {
             this.callback = (row) => row[column] == value
@@ -44,10 +44,6 @@ export function where(column, query, chain) {
         },
 
         _filter() {
-            query.setFilter(
-                chain.with(this)
-            )
-
             return query
         },
 
