@@ -82,6 +82,15 @@ test('and two conditions', () => {
     expect(result).toEqual([])
 })
 
+test('where() can and conditions', () => {
+    const result = query(data)
+        .where('id').equal(1)
+        .where('id').above(2)
+        .get()
+
+    expect(result).toEqual([])
+})
+
 test('or two conditions', () => {
     const result = query(data)
         .where('id').equal(1)
