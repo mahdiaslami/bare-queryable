@@ -3,7 +3,7 @@ import { where, and, or } from './condition.js'
 function query(array) {
     return {
         _data: array,
-        _filter: null,
+        _filterCallback: null,
 
         get() {
             return this.do(data => data)
@@ -24,8 +24,8 @@ function query(array) {
         },
 
         filter() {
-            if (this._filter) {
-                return data => data.filter(this._filter)
+            if (this._filterCallback) {
+                return data => data.filter(this._filterCallback)
             }
 
             return data => data
@@ -40,11 +40,11 @@ function query(array) {
         },
 
         setFilter(filter) {
-            this._filter = filter
+            this._filterCallback = filter
         },
 
         getFilter() {
-            return this._filter ?? (() => true)
+            return this._filterCallback ?? (() => true)
         }
     }
 }
