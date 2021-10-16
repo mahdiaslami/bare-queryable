@@ -69,12 +69,12 @@ function query(array) {
         orWhere(column) {
             const whereClause = where(column, this)
 
-            this.or(whereClause)
+            this._or(whereClause)
 
             return whereClause
         },
 
-        or(whereClause) {
+        _or(whereClause) {
             const first = this._filterCallback
 
             this._filterCallback = (row) => first(row) || whereClause.call(row)
