@@ -6,18 +6,18 @@ function query(array) {
         _filterCallback: null,
 
         get() {
-            return this.do(data => data)
+            return this.prepareResult(data => data)
         },
 
         first() {
-            return this.do(data => data[0])
+            return this.prepareResult(data => data[0])
         },
 
         last() {
-            return this.do(data => data[data.length - 1])
+            return this.prepareResult(data => data[data.length - 1])
         },
 
-        do(callback) {
+        prepareResult(callback) {
             return callback(
                 this.filter(this._data)
             )

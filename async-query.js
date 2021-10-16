@@ -5,7 +5,7 @@ function asyncQuery(promise) {
 
     parent.promise = promise
 
-    parent.do = function (callback) {
+    parent.prepareResult = function (callback) {
         return this.promise.then(data => this.filter(data)).then(callback)
     }
 
