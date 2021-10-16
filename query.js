@@ -23,12 +23,12 @@ function query(array) {
         },
 
         _prepareResult() {
-            const result = this.filter(this._data)
+            const result = this._filter(this._data)
 
             return this.limit(result)
         },
 
-        filter(data) {
+        _filter(data) {
             if (this._filterCallback) {
                 return data.filter(this._filterCallback)
             }

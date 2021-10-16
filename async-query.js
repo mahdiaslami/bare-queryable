@@ -7,7 +7,7 @@ function asyncQuery(promise) {
 
     parent._prepareResult = function () {
         return this.promise
-            .then(data => this.filter(data))
+            .then(data => this._filter(data))
             .then(data => this.limit(data))
     }
 
