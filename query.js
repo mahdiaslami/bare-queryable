@@ -18,9 +18,9 @@ function query(array) {
         },
 
         prepareResult(callback) {
-            return callback(
-                this.filter(this._data)
-            )
+            const result = this.filter(this._data)
+
+            return callback(result)
         },
 
         filter(data) {
