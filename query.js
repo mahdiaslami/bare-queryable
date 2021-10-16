@@ -34,13 +34,21 @@ function query(array) {
         where(column) {
             const whereClause = where(column, this)
 
+            this._filterCallback = (row) => whereClause.call(row)
+
+            return whereClause
+        },
+
+        andWhere(column) {
+            const whereClause = where(column, this)
+
             this.and(whereClause)
 
             return whereClause
         },
 
         and(whereClause) {
-            const first = this.getFilter()
+            const first = this._filterCallback
 
             this._filterCallback = (row) => first(row) && whereClause.call(row)
         },
@@ -54,14 +62,10 @@ function query(array) {
         },
 
         or(whereClause) {
-            const first = this.getFilter()
+            const first = this._filterCallback
 
             this._filterCallback = (row) => first(row) || whereClause.call(row)
         },
-
-        getFilter() {
-            return this._filterCallback ?? (() => true)
-        }
     }
 }
 
