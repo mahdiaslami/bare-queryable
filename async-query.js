@@ -1,15 +1,15 @@
 import query from './query.js'
 
 function asyncQuery(promise) {
-    return {
-        ...query([]),
+    const parent = query()
 
-        promise: promise,
+    parent.promise = promise
 
-        do(callback) {
-            return this.promise.then(this.filter()).then(callback)
-        },
+    parent.do = function (callback) {
+        return this.promise.then(this.filter()).then(callback)
     }
+
+    return parent
 }
 
 export default asyncQuery
