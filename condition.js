@@ -1,50 +1,46 @@
 
-export function where(column, query) {
+export function where(column, returnValue) {
     return {
         equal(value) {
             this.callback = (row) => row[column] == value
 
-            return this._filter()
+            return returnValue
         },
 
         above(value) {
             this.callback = (row) => row[column] > value
 
-            return this._filter()
+            return returnValue
         },
 
         aboveOrEqual(value) {
             this.callback = (row) => row[column] >= value
 
-            return this._filter()
+            return returnValue
         },
 
         below(value) {
             this.callback = (row) => row[column] < value
 
-            return this._filter()
+            return returnValue
         },
 
         belowOrEqual(value) {
             this.callback = (row) => row[column] <= value
 
-            return this._filter()
+            return returnValue
         },
 
         contain(value) {
             this.callback = (row) => row[column].includes(value)
 
-            return this._filter()
+            return returnValue
         },
 
         in(array) {
             this.callback = (row) => array.includes(row[column])
 
-            return this._filter()
-        },
-
-        _filter() {
-            return query
+            return returnValue
         },
 
         call(row) {
