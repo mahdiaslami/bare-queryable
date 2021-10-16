@@ -34,6 +34,14 @@ function query(array) {
         where(column) {
             const whereClause = where(column, this)
 
+            this._filterCallback = (row) => whereClause.call(row)
+
+            return whereClause
+        },
+
+        andWhere(column) {
+            const whereClause = where(column, this)
+
             this.and(whereClause)
 
             return whereClause

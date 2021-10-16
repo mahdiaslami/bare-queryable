@@ -76,7 +76,7 @@ test('where contain', () => {
 test('and two conditions', () => {
     const result = query(data)
         .where('id').equal(1)
-        .where('id').above(2)
+        .andWhere('id').above(2)
         .get()
 
     expect(result).toEqual([])
