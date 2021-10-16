@@ -1,51 +1,84 @@
-import { where, and, or } from './condition.js'
+import where from './where.js'
 
 function query(array) {
     return {
         _data: array,
-        _filter: null,
+        _filterCallback: null,
+        _limitCallback: null,
 
         get() {
-            return this.do(data => data)
+            return this.prepareResult()
         },
 
         first() {
-            return this.do(data => data[0])
+            this._limitCallback = data => data[0]
+
+            return this.prepareResult()
         },
 
         last() {
-            return this.do(data => data[data.length - 1])
+            this._limitCallback = data => data[data.length - 1]
+
+            return this.prepareResult()
         },
 
-        do(callback) {
-            return callback(
-                this.filter()(this._data)
-            )
+        prepareResult() {
+            const result = this.filter(this._data)
+
+            return this.limit(result)
         },
 
-        filter() {
-            if (this._filter) {
-                return data => data.filter(this._filter)
+        filter(data) {
+            if (this._filterCallback) {
+                return data.filter(this._filterCallback)
             }
 
-            return data => data
+            return data
+        },
+
+        limit(data) {
+            if (this._limitCallback) {
+                return this._limitCallback(data)
+            }
+
+            return data
         },
 
         where(column) {
-            return where(column, this, and(this.getFilter()))
+            const whereClause = where(column, this)
+
+            this._filterCallback = (row) => whereClause.call(row)
+
+            return whereClause
+        },
+
+        andWhere(column) {
+            const whereClause = where(column, this)
+
+            this.and(whereClause)
+
+            return whereClause
+        },
+
+        and(whereClause) {
+            const first = this._filterCallback
+
+            this._filterCallback = (row) => first(row) && whereClause.call(row)
         },
 
         orWhere(column) {
-            return where(column, this, or(this.getFilter()))
+            const whereClause = where(column, this)
+
+            this.or(whereClause)
+
+            return whereClause
         },
 
-        setFilter(filter) {
-            this._filter = filter
-        },
+        or(whereClause) {
+            const first = this._filterCallback
 
-        getFilter() {
-            return this._filter ?? (() => true)
-        }
+            this._filterCallback = (row) => first(row) || whereClause.call(row)
+        },
     }
 }
 
