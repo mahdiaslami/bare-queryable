@@ -49,15 +49,6 @@ export function where(column, returnValue) {
     }
 }
 
-
-export function and(firstCallback) {
-    return {
-        with(secondCallback) {
-            return (row) => firstCallback(row) && secondCallback.call(row)
-        }
-    }
-}
-
 export function or(firstCallback) {
     return {
         with(secondCallback) {
