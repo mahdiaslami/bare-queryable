@@ -34,9 +34,7 @@ function query(array) {
         where(column) {
             const whereClause = where(column, this)
 
-            this.setFilter(
-                this.and(whereClause)
-            )
+            this.and(whereClause)
 
             return whereClause
         },
@@ -44,15 +42,13 @@ function query(array) {
         and(whereClause) {
             const first = this.getFilter()
 
-            return (row) => first(row) && whereClause.call(row)
+            this._filterCallback = (row) => first(row) && whereClause.call(row)
         },
 
         orWhere(column) {
             const whereClause = where(column, this)
 
-            this.setFilter(
-                this.or(whereClause)
-            )
+            this.or(whereClause)
 
             return whereClause
         },
@@ -60,11 +56,7 @@ function query(array) {
         or(whereClause) {
             const first = this.getFilter()
 
-            return (row) => first(row) || whereClause.call(row)
-        },
-
-        setFilter(filter) {
-            this._filterCallback = filter
+            this._filterCallback = (row) => first(row) || whereClause.call(row)
         },
 
         getFilter() {
