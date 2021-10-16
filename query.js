@@ -55,12 +55,12 @@ function query(array) {
         andWhere(column) {
             const whereClause = where(column, this)
 
-            this.and(whereClause)
+            this._and(whereClause)
 
             return whereClause
         },
 
-        and(whereClause) {
+        _and(whereClause) {
             const first = this._filterCallback
 
             this._filterCallback = (row) => first(row) && whereClause.call(row)
