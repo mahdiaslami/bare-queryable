@@ -25,7 +25,7 @@ function query(array) {
         _prepareResult() {
             const result = this._filter(this._data)
 
-            return this.limit(result)
+            return this._limit(result)
         },
 
         _filter(data) {
@@ -36,7 +36,7 @@ function query(array) {
             return data
         },
 
-        limit(data) {
+        _limit(data) {
             if (this._limitCallback) {
                 return this._limitCallback(data)
             }
