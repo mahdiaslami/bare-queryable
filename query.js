@@ -1,4 +1,4 @@
-import { where, or } from './condition.js'
+import { where } from './condition.js'
 
 function query(array) {
     return {
@@ -49,10 +49,14 @@ function query(array) {
             const whereClause = where(column, this)
 
             this.setFilter(
-                or(this.getFilter()).with(whereClause)
+                this.or(this.getFilter(), whereClause)
             )
 
             return whereClause
+        },
+
+        or(first, second) {
+            return (row) => first(row) || second.call(row)
         },
 
         setFilter(filter) {
