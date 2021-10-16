@@ -48,7 +48,7 @@ function query(array) {
         },
 
         and(whereClause) {
-            const first = this.getFilter()
+            const first = this._filterCallback
 
             this._filterCallback = (row) => first(row) && whereClause.call(row)
         },
@@ -62,14 +62,10 @@ function query(array) {
         },
 
         or(whereClause) {
-            const first = this.getFilter()
+            const first = this._filterCallback
 
             this._filterCallback = (row) => first(row) || whereClause.call(row)
         },
-
-        getFilter() {
-            return this._filterCallback ?? (() => true)
-        }
     }
 }
 
