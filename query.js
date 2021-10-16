@@ -41,10 +41,10 @@ function query(array) {
             return whereClause
         },
 
-        and(second) {
+        and(whereClause) {
             const first = this.getFilter()
 
-            return (row) => first(row) && second.call(row)
+            return (row) => first(row) && whereClause.call(row)
         },
 
         orWhere(column) {
@@ -57,10 +57,10 @@ function query(array) {
             return whereClause
         },
 
-        or(second) {
+        or(whereClause) {
             const first = this.getFilter()
 
-            return (row) => first(row) || second.call(row)
+            return (row) => first(row) || whereClause.call(row)
         },
 
         setFilter(filter) {
