@@ -1,8 +1,8 @@
 import where from './where.js'
 
-export const NUMBER_TYPE = (a, b) => a - b
-export const STRING_TYPE = (a, b) => a.localeCompare(b)
-export const DATE_TYPE = (a, b) => (new Date(a)).getTime() - (new Date(b).getTime())
+export const NUMBER_COMPARATOR = (a, b) => a - b
+export const STRING_COMPARATOR = (a, b) => a.localeCompare(b)
+export const DATE_COMPARATOR = (a, b) => (new Date(a)).getTime() - (new Date(b).getTime())
 
 function query(array) {
     return {
@@ -99,8 +99,8 @@ function query(array) {
             this._filterCallback = (row) => first(row) || whereClause.call(row)
         },
 
-        orderBy(column, type = NUMBER_TYPE) {
-            const orderByExpression = orderBy(column, type, this)
+        orderBy(column, comparator = NUMBER_COMPARATOR) {
+            const orderByExpression = orderBy(column, comparator, this)
 
             this._orderByCallback = (a, b) => orderByExpression.call(a, b)
 
@@ -109,9 +109,9 @@ function query(array) {
     }
 }
 
-function orderBy(column, type, returnValue) {
+function orderBy(column, comparator, returnValue) {
     return {
-        _callback: type,
+        _callback: comparator,
 
         asc() {
             this.orderFactor = 1

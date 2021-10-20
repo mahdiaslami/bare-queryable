@@ -1,4 +1,4 @@
-import query, { NUMBER_TYPE, STRING_TYPE, DATE_TYPE } from './query.js'
+import query, { NUMBER_COMPARATOR, STRING_COMPARATOR, DATE_COMPARATOR } from './query.js'
 import { data, factory, now } from './fake.js'
 
 test('get all data', () => {
@@ -102,7 +102,7 @@ test('or two conditions', () => {
 
 test('order by a numeric column', () => {
     const result = query(data)
-        .orderBy('intval', NUMBER_TYPE).asc()
+        .orderBy('intval', NUMBER_COMPARATOR).asc()
         .get()
 
     expect(result).toEqual([data[1], data[3], data[2], data[0]])
@@ -110,7 +110,7 @@ test('order by a numeric column', () => {
 
 test('order by a str column', () => {
     const result = query(data)
-        .orderBy('strval', STRING_TYPE).asc()
+        .orderBy('strval', STRING_COMPARATOR).asc()
         .get()
 
     expect(result).toEqual([data[1], data[3], data[2], data[0]])
@@ -118,7 +118,7 @@ test('order by a str column', () => {
 
 test('order by a date column', () => {
     const result = query(data)
-        .orderBy('dateval', DATE_TYPE).asc()
+        .orderBy('dateval', DATE_COMPARATOR).asc()
         .get()
 
     expect(result).toEqual([data[1], data[3], data[2], data[0]])
@@ -126,7 +126,7 @@ test('order by a date column', () => {
 
 test('order by a column descending', () => {
     const result = query(data)
-        .orderBy('dateval', DATE_TYPE).desc()
+        .orderBy('dateval', DATE_COMPARATOR).desc()
         .get()
 
     expect(result).toEqual([data[0], data[2], data[3], data[1]])
