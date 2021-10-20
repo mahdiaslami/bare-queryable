@@ -1,3 +1,4 @@
+import { factory } from './fake.js'
 import where from './where.js'
 
 export const NUMBER_TYPE = 1
@@ -100,22 +101,49 @@ function query(array) {
         },
 
         orderBy(column, type = NUMBER_TYPE) {
-            this._orderByCallback = (a, b) => {
-                const valueOfA = a[column]
-                const valueOfB = b[column]
+            const orderByExpression = orderBy(column, type, this)
 
-                switch (type) {
-                    case NUMBER_TYPE:
-                        return valueOfA - valueOfB
-                    case STRING_TYPE:
-                        return valueOfA.localeCompare(valueOfB)
-                    case DATE_TYPE:
-                        return (new Date(valueOfA)).getTime() - (new Date(valueOfB).getTime())
-                }
+            this._orderByCallback = (a, b) => orderByExpression.call(a, b)
+
+            return orderByExpression
+        }
+    }
+}
+
+function orderBy(column, type, returnValue) {
+    return {
+        asc() {
+            this.orderFactor = 1
+
+            return returnValue
+        },
+
+        desc() {
+            this.orderFactor = -1
+
+            return returnValue
+        },
+
+        call(a, b) {
+            const valueOfA = a[column]
+            const valueOfB = b[column]
+
+            let result = 0
+
+            switch (type) {
+                case NUMBER_TYPE:
+                    result = valueOfA - valueOfB
+                    break;
+                case STRING_TYPE:
+                    result = valueOfA.localeCompare(valueOfB)
+                    break;
+                case DATE_TYPE:
+                    result = (new Date(valueOfA)).getTime() - (new Date(valueOfB).getTime())
+                    break;
             }
 
-            return this
-        }
+            return this.orderFactor * result
+        },
     }
 }
 

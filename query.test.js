@@ -102,7 +102,7 @@ test('or two conditions', () => {
 
 test('order by a numeric column', () => {
     const result = query(data)
-        .orderBy('intval', NUMBER_TYPE)
+        .orderBy('intval', NUMBER_TYPE).asc()
         .get()
 
     expect(result).toEqual([data[1], data[3], data[2], data[0]])
@@ -110,7 +110,7 @@ test('order by a numeric column', () => {
 
 test('order by a str column', () => {
     const result = query(data)
-        .orderBy('strval', STRING_TYPE)
+        .orderBy('strval', STRING_TYPE).asc()
         .get()
 
     expect(result).toEqual([data[1], data[3], data[2], data[0]])
@@ -118,10 +118,19 @@ test('order by a str column', () => {
 
 test('order by a date column', () => {
     const result = query(data)
-        .orderBy('dateval', DATE_TYPE)
+        .orderBy('dateval', DATE_TYPE).asc()
         .get()
 
     expect(result).toEqual([data[1], data[3], data[2], data[0]])
+})
+
+test('order by a column descending', () => {
+    console.log([data[0], data[2], data[3], data[1]])
+    const result = query(data)
+        .orderBy('dateval', DATE_TYPE).desc()
+        .get()
+
+    expect(result).toEqual([data[0], data[2], data[3], data[1]])
 })
 
 test('prevent duplicate item that staisfy two or conditions', () => {
