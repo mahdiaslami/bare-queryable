@@ -1,9 +1,6 @@
 import where from './where.js'
-import orderBy from './order-by'
-
-export const NUMBER_COMPARATOR = (a, b) => a - b
-export const STRING_COMPARATOR = (a, b) => a.localeCompare(b)
-export const DATE_COMPARATOR = (a, b) => (new Date(a)).getTime() - (new Date(b).getTime())
+import orderBy from './order-by.js'
+import { NUMBER_COMPARATOR } from './comparators.js'
 
 function query(array) {
     return {

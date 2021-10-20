@@ -1,4 +1,5 @@
-import query, { NUMBER_COMPARATOR, STRING_COMPARATOR, DATE_COMPARATOR } from './query.js'
+import query from './query.js'
+import { NUMBER_COMPARATOR, STRING_COMPARATOR, DATE_COMPARATOR } from './comparators.js'
 import { data, factory, now } from './fake.js'
 
 test('get all data', () => {

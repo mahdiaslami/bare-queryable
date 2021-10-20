@@ -1,5 +1,5 @@
-import query from './async-query'
-import { NUMBER_COMPARATOR, STRING_COMPARATOR } from './query'
+import query from './async-query.js'
+import { NUMBER_COMPARATOR, STRING_COMPARATOR } from './comparators.js'
 import { data } from './fake.js'
 
 const promise = new Promise((resolve) => resolve(data))
