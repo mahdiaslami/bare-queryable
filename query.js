@@ -1,4 +1,5 @@
 import where from './where.js'
+import orderBy from './order-by'
 
 export const NUMBER_COMPARATOR = (a, b) => a - b
 export const STRING_COMPARATOR = (a, b) => a.localeCompare(b)
@@ -124,28 +125,6 @@ function query(array) {
                 return previousCallbackResult
             }
         }
-    }
-}
-
-function orderBy(column, comparator, returnValue) {
-    return {
-        _callback: comparator,
-
-        asc() {
-            this.orderFactor = 1
-
-            return returnValue
-        },
-
-        desc() {
-            this.orderFactor = -1
-
-            return returnValue
-        },
-
-        call(a, b) {
-            return this.orderFactor * this._callback(a[column], b[column])
-        },
     }
 }
 
