@@ -96,7 +96,16 @@ function query(array) {
         },
 
         orderBy(column) {
-            this._orderByCallback = (a, b) => a[column] - b[column]
+            this._orderByCallback = (a, b) => {
+                const valueOfA = a[column]
+                const valueOfB = b[column]
+
+                if (typeof valueOfA === 'string' || valueOfA instanceof String) {
+                    return valueOfA.localeCompare(valueOfB)
+                }
+
+                return valueOfA - valueOfB
+            }
 
             return this
         }

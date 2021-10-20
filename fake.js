@@ -4,21 +4,25 @@ export const data = [
         id: 0,
         name: 'aaaa',
         intval: 3,
+        strval: 'd',
     },
     {
         id: 1,
         name: 'abaa',
         intval: 0,
+        strval: 'a',
     },
     {
         id: 2,
         name: 'aaca',
         intval: 2,
+        strval: 'c',
     },
     {
         id: 3,
         name: 'aaad',
         intval: 1,
+        strval: 'b',
     }
 ]
 
