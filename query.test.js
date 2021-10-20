@@ -132,6 +132,15 @@ test('order by a column descending', () => {
     expect(result).toEqual([data[0], data[2], data[3], data[1]])
 })
 
+test('order by two column', () => {
+    const result = query(data)
+        .orderBy('strval2', STRING_COMPARATOR).asc()
+        .orderBy('intval', NUMBER_COMPARATOR).desc()
+        .get()
+
+    expect(result).toEqual([data[3], data[1], data[0], data[2]])
+})
+
 test('prevent duplicate item that staisfy two or conditions', () => {
     const result = query(data)
         .where('id').above(1)

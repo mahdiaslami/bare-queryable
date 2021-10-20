@@ -102,7 +102,21 @@ function query(array) {
         orderBy(column, comparator = NUMBER_COMPARATOR) {
             const orderByExpression = orderBy(column, comparator, this)
 
-            this._orderByCallback = (a, b) => orderByExpression.call(a, b)
+            if (this._orderByCallback) {
+                const first = this._orderByCallback
+
+                this._orderByCallback = (a, b) => {
+                    const firstResult = first(a, b)
+
+                    if (firstResult == 0) {
+                        return orderByExpression.call(a, b)
+                    }
+
+                    return firstResult
+                }
+            } else {
+                this._orderByCallback = (a, b) => orderByExpression.call(a, b)
+            }
 
             return orderByExpression
         }
