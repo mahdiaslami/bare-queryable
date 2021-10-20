@@ -12,7 +12,7 @@ export const data = [
         name: 'abaa',
         intval: 0,
         strval: 'a',
-        dateval: '11/2/2021, 11:42:48 AM',
+        dateval: '10/2/2021, 11:42:48 AM',
     },
     {
         id: 2,
