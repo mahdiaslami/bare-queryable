@@ -1,8 +1,8 @@
 import where from './where.js'
 
-export const NUMBER_TYPE = 1
-export const STRING_TYPE = 2
-export const DATE_TYPE = 3
+export const NUMBER_TYPE = (a, b) => a - b
+export const STRING_TYPE = (a, b) => a.localeCompare(b)
+export const DATE_TYPE = (a, b) => (new Date(a)).getTime() - (new Date(b).getTime())
 
 function query(array) {
     return {
@@ -111,6 +111,8 @@ function query(array) {
 
 function orderBy(column, type, returnValue) {
     return {
+        _callback: type,
+
         asc() {
             this.orderFactor = 1
 
@@ -124,24 +126,7 @@ function orderBy(column, type, returnValue) {
         },
 
         call(a, b) {
-            const valueOfA = a[column]
-            const valueOfB = b[column]
-
-            let result = 0
-
-            switch (type) {
-                case NUMBER_TYPE:
-                    result = valueOfA - valueOfB
-                    break;
-                case STRING_TYPE:
-                    result = valueOfA.localeCompare(valueOfB)
-                    break;
-                case DATE_TYPE:
-                    result = (new Date(valueOfA)).getTime() - (new Date(valueOfB).getTime())
-                    break;
-            }
-
-            return this.orderFactor * result
+            return this.orderFactor * this._callback(a[column], b[column])
         },
     }
 }
