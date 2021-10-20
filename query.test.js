@@ -1,4 +1,5 @@
 import query from './query.js'
+import { NUMBER_COMPARATOR, STRING_COMPARATOR, DATE_COMPARATOR } from './comparators.js'
 import { data, factory, now } from './fake.js'
 
 test('get all data', () => {
@@ -82,6 +83,15 @@ test('and two conditions', () => {
     expect(result).toEqual([])
 })
 
+test('where() can and conditions', () => {
+    const result = query(data)
+        .where('id').equal(1)
+        .where('id').above(2)
+        .get()
+
+    expect(result).toEqual([])
+})
+
 test('or two conditions', () => {
     const result = query(data)
         .where('id').equal(1)
@@ -89,6 +99,47 @@ test('or two conditions', () => {
         .get()
 
     expect(result).toEqual([data[1], data[3]])
+})
+
+test('order by a numeric column', () => {
+    const result = query(data)
+        .orderBy('intval', NUMBER_COMPARATOR).asc()
+        .get()
+
+    expect(result).toEqual([data[1], data[3], data[2], data[0]])
+})
+
+test('order by a str column', () => {
+    const result = query(data)
+        .orderBy('strval', STRING_COMPARATOR).asc()
+        .get()
+
+    expect(result).toEqual([data[1], data[3], data[2], data[0]])
+})
+
+test('order by a date column', () => {
+    const result = query(data)
+        .orderBy('dateval', DATE_COMPARATOR).asc()
+        .get()
+
+    expect(result).toEqual([data[1], data[3], data[2], data[0]])
+})
+
+test('order by a column descending', () => {
+    const result = query(data)
+        .orderBy('dateval', DATE_COMPARATOR).desc()
+        .get()
+
+    expect(result).toEqual([data[0], data[2], data[3], data[1]])
+})
+
+test('order by two column', () => {
+    const result = query(data)
+        .orderBy('strval2', STRING_COMPARATOR).asc()
+        .orderBy('intval', NUMBER_COMPARATOR).desc()
+        .get()
+
+    expect(result).toEqual([data[3], data[1], data[0], data[2]])
 })
 
 test('prevent duplicate item that staisfy two or conditions', () => {
