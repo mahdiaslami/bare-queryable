@@ -100,6 +100,14 @@ test('or two conditions', () => {
     expect(result).toEqual([data[1], data[3]])
 })
 
+test('order by a numeric column', () => {
+    const result = query(data)
+        .orderBy('intval')
+        .get()
+
+    expect(result).toEqual([data[1], data[3], data[2], data[0]])
+})
+
 test('prevent duplicate item that staisfy two or conditions', () => {
     const result = query(data)
         .where('id').above(1)

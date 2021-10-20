@@ -2,19 +2,23 @@
 export const data = [
     {
         id: 0,
-        name: 'aaaa'
+        name: 'aaaa',
+        intval: 3,
     },
     {
         id: 1,
-        name: 'abaa'
+        name: 'abaa',
+        intval: 0,
     },
     {
         id: 2,
-        name: 'aaca'
+        name: 'aaca',
+        intval: 2,
     },
     {
         id: 3,
-        name: 'aaad'
+        name: 'aaad',
+        intval: 1,
     }
 ]
 

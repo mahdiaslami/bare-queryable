@@ -5,6 +5,7 @@ function query(array) {
         _data: array,
         _filterCallback: null,
         _limitCallback: null,
+        _orderByCallback: null,
 
         get() {
             return this._prepareResult()
@@ -23,7 +24,9 @@ function query(array) {
         },
 
         _prepareResult() {
-            const result = this._filter(this._data)
+            let result = this._filter(this._data)
+
+            result = this._orderBy(result)
 
             return this._limit(result)
         },
@@ -31,6 +34,14 @@ function query(array) {
         _filter(data) {
             if (this._filterCallback) {
                 return data.filter(this._filterCallback)
+            }
+
+            return data
+        },
+
+        _orderBy(data) {
+            if (this._orderByCallback) {
+                return data.slice(0).sort(this._orderByCallback)
             }
 
             return data
@@ -83,6 +94,12 @@ function query(array) {
 
             this._filterCallback = (row) => first(row) || whereClause.call(row)
         },
+
+        orderBy(column) {
+            this._orderByCallback = (a, b) => a[column] - b[column]
+
+            return this
+        }
     }
 }
 
