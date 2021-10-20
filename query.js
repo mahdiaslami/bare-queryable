@@ -1,4 +1,3 @@
-import { factory } from './fake.js'
 import where from './where.js'
 
 export const NUMBER_TYPE = 1
