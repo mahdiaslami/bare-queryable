@@ -103,22 +103,26 @@ function query(array) {
             const orderByExpression = orderBy(column, comparator, this)
 
             if (this._orderByCallback) {
-                const previousCallback = this._orderByCallback
-
-                this._orderByCallback = (a, b) => {
-                    const previousCallbackResult = previousCallback(a, b)
-
-                    if (previousCallbackResult == 0) {
-                        return orderByExpression.call(a, b)
-                    }
-
-                    return previousCallbackResult
-                }
+                this._chainOrderByExpressions(orderByExpression)
             } else {
                 this._orderByCallback = (a, b) => orderByExpression.call(a, b)
             }
 
             return orderByExpression
+        },
+
+        _chainOrderByExpressions(orderByExpression) {
+            const previousCallback = this._orderByCallback
+
+            this._orderByCallback = (a, b) => {
+                const previousCallbackResult = previousCallback(a, b)
+
+                if (previousCallbackResult == 0) {
+                    return orderByExpression.call(a, b)
+                }
+
+                return previousCallbackResult
+            }
         }
     }
 }
