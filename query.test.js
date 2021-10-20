@@ -125,7 +125,6 @@ test('order by a date column', () => {
 })
 
 test('order by a column descending', () => {
-    console.log([data[0], data[2], data[3], data[1]])
     const result = query(data)
         .orderBy('dateval', DATE_TYPE).desc()
         .get()
