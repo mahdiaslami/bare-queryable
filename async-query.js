@@ -8,6 +8,7 @@ function asyncQuery(promise) {
     q._prepareResult = function () {
         return this._promise
             .then(data => this._filter(data))
+            .then(data => this._orderBy(data))
             .then(data => this._limit(data))
     }
 
