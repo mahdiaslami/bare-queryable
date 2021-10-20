@@ -80,9 +80,9 @@ function query(array) {
         },
 
         _and(whereClause) {
-            const first = this._filterCallback
+            const previousCallback = this._filterCallback
 
-            this._filterCallback = (row) => first(row) && whereClause.call(row)
+            this._filterCallback = (row) => previousCallback(row) && whereClause.call(row)
         },
 
         orWhere(column) {
@@ -94,25 +94,25 @@ function query(array) {
         },
 
         _or(whereClause) {
-            const first = this._filterCallback
+            const previousCallback = this._filterCallback
 
-            this._filterCallback = (row) => first(row) || whereClause.call(row)
+            this._filterCallback = (row) => previousCallback(row) || whereClause.call(row)
         },
 
         orderBy(column, comparator = NUMBER_COMPARATOR) {
             const orderByExpression = orderBy(column, comparator, this)
 
             if (this._orderByCallback) {
-                const first = this._orderByCallback
+                const previousCallback = this._orderByCallback
 
                 this._orderByCallback = (a, b) => {
-                    const firstResult = first(a, b)
+                    const previousCallbackResult = previousCallback(a, b)
 
-                    if (firstResult == 0) {
+                    if (previousCallbackResult == 0) {
                         return orderByExpression.call(a, b)
                     }
 
-                    return firstResult
+                    return previousCallbackResult
                 }
             } else {
                 this._orderByCallback = (a, b) => orderByExpression.call(a, b)
