@@ -1,5 +1,9 @@
 import where from './where.js'
 
+export const NUMBER_TYPE = 1
+export const STRING_TYPE = 2
+export const DATE_TYPE = 3
+
 function query(array) {
     return {
         _data: array,
@@ -95,18 +99,19 @@ function query(array) {
             this._filterCallback = (row) => first(row) || whereClause.call(row)
         },
 
-        orderBy(column, type = null) {
+        orderBy(column, type = NUMBER_TYPE) {
             this._orderByCallback = (a, b) => {
                 const valueOfA = a[column]
                 const valueOfB = b[column]
 
-                if (type === 'date') {
-                    return (new Date(valueOfA)).getTime() - (new Date(valueOfB).getTime())
-                } else if (typeof valueOfA === 'string' || valueOfA instanceof String) {
-                    return valueOfA.localeCompare(valueOfB)
+                switch (type) {
+                    case NUMBER_TYPE:
+                        return valueOfA - valueOfB
+                    case STRING_TYPE:
+                        return valueOfA.localeCompare(valueOfB)
+                    case DATE_TYPE:
+                        return (new Date(valueOfA)).getTime() - (new Date(valueOfB).getTime())
                 }
-
-                return valueOfA - valueOfB
             }
 
             return this

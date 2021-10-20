@@ -1,4 +1,4 @@
-import query from './query.js'
+import query, { NUMBER_TYPE, STRING_TYPE, DATE_TYPE } from './query.js'
 import { data, factory, now } from './fake.js'
 
 test('get all data', () => {
@@ -102,7 +102,7 @@ test('or two conditions', () => {
 
 test('order by a numeric column', () => {
     const result = query(data)
-        .orderBy('intval')
+        .orderBy('intval', NUMBER_TYPE)
         .get()
 
     expect(result).toEqual([data[1], data[3], data[2], data[0]])
@@ -110,7 +110,7 @@ test('order by a numeric column', () => {
 
 test('order by a str column', () => {
     const result = query(data)
-        .orderBy('strval')
+        .orderBy('strval', STRING_TYPE)
         .get()
 
     expect(result).toEqual([data[1], data[3], data[2], data[0]])
@@ -118,7 +118,7 @@ test('order by a str column', () => {
 
 test('order by a date column', () => {
     const result = query(data)
-        .orderBy('dateval', 'date')
+        .orderBy('dateval', DATE_TYPE)
         .get()
 
     expect(result).toEqual([data[1], data[3], data[2], data[0]])
