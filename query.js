@@ -95,12 +95,14 @@ function query(array) {
             this._filterCallback = (row) => first(row) || whereClause.call(row)
         },
 
-        orderBy(column) {
+        orderBy(column, type = null) {
             this._orderByCallback = (a, b) => {
                 const valueOfA = a[column]
                 const valueOfB = b[column]
 
-                if (typeof valueOfA === 'string' || valueOfA instanceof String) {
+                if (type === 'date') {
+                    return (new Date(valueOfA)).getTime() - (new Date(valueOfB).getTime())
+                } else if (typeof valueOfA === 'string' || valueOfA instanceof String) {
                     return valueOfA.localeCompare(valueOfB)
                 }
 
