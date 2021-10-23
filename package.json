@@ -1,6 +1,6 @@
 {
   "name": "bare-queryable",
-  "version": "1.5.0",
+  "version": "1.5.3",
   "description": "Query on array.",
   "type": "module",
   "main": "index.js",

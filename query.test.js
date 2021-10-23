@@ -20,6 +20,12 @@ test('get last item', () => {
     expect(result).toEqual(data[3])
 })
 
+test('get count of items', () => {
+    const result = query(data).count()
+
+    expect(result).toBe(data.length)
+})
+
 test('where equal', () => {
     const result = query(data).where('id').equal(2).get()
 
