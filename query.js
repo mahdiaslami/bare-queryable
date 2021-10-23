@@ -25,6 +25,12 @@ function query(array) {
             return this._prepareResult()
         },
 
+        count() {
+            this._limitCallback = data => data.length
+
+            return this._prepareResult()
+        },
+
         _prepareResult() {
             let result = this._filter(this._data)
 
