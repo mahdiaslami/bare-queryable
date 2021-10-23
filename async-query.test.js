@@ -29,6 +29,14 @@ test('get last item', () => {
     })
 })
 
+test('get count of items', () => {
+    expect.assertions(1)
+
+    query(promise).count().then(result => {
+        expect(result).toEqual(data.length)
+    })
+})
+
 test('query with condition', () => {
     expect.assertions(1)
 
