@@ -3,11 +3,9 @@ import query from './query.js'
 function asyncQuery(promise) {
     const q = query()
 
-    q._prepareResult = function () {
+    q.call = function asyncCall() {
         return promise
-            .then((data) => this._filter(data))
-            .then((data) => this._orderBy(data))
-            .then((data) => this._limit(data))
+            .then((data) => this._prepareResult(data))
     }
 
     return q
