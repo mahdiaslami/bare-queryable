@@ -14,19 +14,19 @@ function query(array) {
         },
 
         first() {
-            this._limitCallback = data => data[0]
+            this._limitCallback = (data) => data[0]
 
             return this._prepareResult()
         },
 
         last() {
-            this._limitCallback = data => data[data.length - 1]
+            this._limitCallback = (data) => data[data.length - 1]
 
             return this._prepareResult()
         },
 
         count() {
-            this._limitCallback = data => data.length
+            this._limitCallback = (data) => data.length
 
             return this._prepareResult()
         },
@@ -121,13 +121,13 @@ function query(array) {
             this._orderByCallback = (a, b) => {
                 const previousCallbackResult = previousCallback(a, b)
 
-                if (previousCallbackResult == 0) {
+                if (previousCallbackResult === 0) {
                     return orderByExpression.call(a, b)
                 }
 
                 return previousCallbackResult
             }
-        }
+        },
     }
 }
 

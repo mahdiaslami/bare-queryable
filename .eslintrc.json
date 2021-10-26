@@ -1,5 +1,6 @@
 {
     "env": {
+        "jest": true,
         "browser": true,
         "es2021": true,
         "node": true
@@ -12,5 +13,27 @@
         "sourceType": "module"
     },
     "rules": {
+        "import/extensions": [
+            "error",
+            "always"
+        ],
+        "semi": [
+            "error",
+            "never"
+        ],
+        "indent": [
+            "warn",
+            4
+        ],
+        "no-underscore-dangle": [
+            "error",
+            {
+                "allowAfterThis": true,
+                "allowAfterSuper": false,
+                "allowAfterThisConstructor": false,
+                "enforceInMethodNames": false,
+                "allowFunctionParams": false
+            }
+        ]
     }
 }
