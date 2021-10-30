@@ -24,3 +24,34 @@ const result =
     where('name').contain('re')
     .get()
 ```
+
+APIs
+----
+
+### Select
+
+#### get()
+
+Returns query result.
+
+```javascript
+query([...]).get()
+```
+
+### Limit
+
+#### first()
+
+Returns first item of query result.
+
+```javascript
+query([...]).first()
+```
+
+#### last()
+
+Returns last item of query result.
+
+```javascript
+query([...]).last()
+```
