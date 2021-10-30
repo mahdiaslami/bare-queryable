@@ -36,12 +36,14 @@ Returns query result.
 
 ```javascript
 query([...]).get()
+
 ```
 
 ### Limit
 
 ```javascript
 query([...]).first()
+
 ```
 
 - #### _first()_
@@ -91,5 +93,32 @@ Filters the array so that the specified column is inside the desired array.
 ```javascript
 query([...])
   .where('id').in([1, 2, 3])
+  .get()
+```
+
+- #### _andWhere(column)_
+
+Chain conditions with `and` operator. both ways are ok.
+
+```javascript
+query([...])
+  .where('id').equal(1)
+  .andWhere('name').contain('foo')
+  .get()
+
+query([...])
+  .where('id').equal(1)
+  .where('name').contain('foo')
+  .get()
+```
+
+- #### _orWhere(column)_
+
+Chain conditions with `or` operator.
+
+```javascript
+query([...])
+  .where('id').equal(1)
+  .orWhere('id').above(10)
   .get()
 ```
