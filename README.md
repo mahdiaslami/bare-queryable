@@ -122,3 +122,29 @@ query([...])
   .orWhere('id').above(10)
   .get()
 ```
+
+### Order by
+
+Sorts columns ascending or descending.
+
+```javascript
+import { NUMBER_COMPARATOR, STRING_COMPARATOR, DATE_COMPARATOR } from 'bare-queryable'
+
+query([...])
+  .orderBy('id', NUMBER_COMPARATOR).asc()
+  .orderBy('name', STRING_COMPARATOR).desc()
+  .orderBy('born_at', DATE_COMPARATOR).desc()
+  .get()
+```
+
+#### DATE_COMPARATOR
+
+A callback that can compare two Date.
+
+#### STRING_COMPARATOR
+
+A callback that can compare two string.
+
+#### NUMBER_COMPARATOR
+
+A callback that can compare two number.
