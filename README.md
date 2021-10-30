@@ -137,14 +137,14 @@ query([...])
   .get()
 ```
 
-#### DATE_COMPARATOR
+- #### _DATE_COMPARATOR_
 
 A callback that can compare two Date.
 
-#### STRING_COMPARATOR
+- #### _STRING_COMPARATOR_
 
 A callback that can compare two string.
 
-#### NUMBER_COMPARATOR
+- #### _NUMBER_COMPARATOR_
 
 A callback that can compare two number.
