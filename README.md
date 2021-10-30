@@ -54,6 +54,10 @@ Returns first item of query result.
 
 Returns last item of query result.
 
+- #### _count()_
+
+Returns count of items in query result.
+
 ### Where
 
 ```javascript
