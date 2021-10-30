@@ -30,7 +30,7 @@ APIs
 
 ### Select
 
-#### get()
+- #### _get()_
 
 Returns query result.
 
@@ -44,11 +44,11 @@ query([...]).get()
 query([...]).first()
 ```
 
-#### first()
+- #### _first()_
 
 Returns first item of query result.
 
-#### last()
+- #### _last()_
 
 Returns last item of query result.
 
@@ -60,31 +60,31 @@ query([...])
   .get()
 ```
 
-#### where(column).equal(value)
+- #### _where(column).equal(value)_
 
 Filters the array so that the specified column is exactly equal to the desired value.
 
-#### where(column).above(value)
+- #### _where(column).above(value)_
 
 Filters the array so that the specified column is greater than the desired value.
 
-#### where(column).aboveOrEqual(value)
+- #### _where(column).aboveOrEqual(value)_
 
 Filters the array so that the specified column is greater than or equal to the desired value.
 
-#### where(column).below(value)
+- #### _where(column).below(value)_
 
 Filters the array so that the specified column is lower than the desired value.
 
-#### where(column).belowOrEqual(value)
+- #### _where(column).belowOrEqual(value)_
 
 Filters the array so that the specified column is lower than or equal to the desired value.
 
-#### where(column).contain(value)
+- #### _where(column).contain(value)_
 
 Filters the array so that the specified column is contain the desired value.
 
-#### where(column).in(array)
+- #### _where(column).in(array)_
 
 Filters the array so that the specified column is inside the desired array.
 
