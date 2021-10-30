@@ -10,29 +10,33 @@ function query(array) {
         _orderByCallback: null,
 
         get() {
-            return this._prepareResult()
+            return this.call()
         },
 
         first() {
-            this._limitCallback = data => data[0]
+            this._limitCallback = (data) => data[0]
 
-            return this._prepareResult()
+            return this.call()
         },
 
         last() {
-            this._limitCallback = data => data[data.length - 1]
+            this._limitCallback = (data) => data[data.length - 1]
 
-            return this._prepareResult()
+            return this.call()
         },
 
         count() {
-            this._limitCallback = data => data.length
+            this._limitCallback = (data) => data.length
 
-            return this._prepareResult()
+            return this.call()
         },
 
-        _prepareResult() {
-            let result = this._filter(this._data)
+        call() {
+            return this._prepareResult(this._data)
+        },
+
+        _prepareResult(data) {
+            let result = this._filter(data)
 
             result = this._orderBy(result)
 
@@ -121,13 +125,13 @@ function query(array) {
             this._orderByCallback = (a, b) => {
                 const previousCallbackResult = previousCallback(a, b)
 
-                if (previousCallbackResult == 0) {
+                if (previousCallbackResult === 0) {
                     return orderByExpression.call(a, b)
                 }
 
                 return previousCallbackResult
             }
-        }
+        },
     }
 }
 

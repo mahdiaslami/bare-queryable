@@ -1,8 +1,7 @@
-
 export default function where(column, returnValue) {
     return {
         equal(value) {
-            this.callback = (row) => row[column] == value
+            this.callback = (row) => row[column] === value
 
             return returnValue
         },

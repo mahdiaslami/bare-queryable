@@ -1,4 +1,3 @@
-
 export default function orderBy(column, comparator, returnValue) {
     return {
         _callback: comparator,
