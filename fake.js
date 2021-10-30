@@ -1,4 +1,3 @@
-
 export const data = [
     {
         id: 0,
@@ -31,7 +30,7 @@ export const data = [
         strval: 'b',
         dateval: '11/2/2021, 11:42:48 AM',
         strval2: 'a',
-    }
+    },
 ]
 
 export function factory(count) {
@@ -40,7 +39,7 @@ export function factory(count) {
     for (let i = 1; i <= count; i++) {
         array.push({
             id: i,
-            name: hash()
+            name: hash(),
         })
     }
 
@@ -48,7 +47,7 @@ export function factory(count) {
 }
 
 export function now() {
-    return (new Date).getTime()
+    return (new Date()).getTime()
 }
 
 export function hash(length = 5) {

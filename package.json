@@ -1,6 +1,6 @@
 {
   "name": "bare-queryable",
-  "version": "1.5.0",
+  "version": "1.5.3",
   "description": "Query on array.",
   "type": "module",
   "main": "index.js",
@@ -22,6 +22,9 @@
     "@babel/core": "^7.15.8",
     "@babel/node": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2",
     "jest": "^27.2.5"
   },
   "jest": {

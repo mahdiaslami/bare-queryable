@@ -20,10 +20,16 @@ test('get last item', () => {
     expect(result).toEqual(data[3])
 })
 
+test('get count of items', () => {
+    const result = query(data).count()
+
+    expect(result).toBe(data.length)
+})
+
 test('where equal', () => {
     const result = query(data).where('id').equal(2).get()
 
-    expect(result).toEqual([data[2]]);
+    expect(result).toEqual([data[2]])
 })
 
 test('where above', () => {
@@ -77,7 +83,8 @@ test('where contain', () => {
 test('and two conditions', () => {
     const result = query(data)
         .where('id').equal(1)
-        .andWhere('id').above(2)
+        .andWhere('id')
+        .above(2)
         .get()
 
     expect(result).toEqual([])
@@ -86,7 +93,8 @@ test('and two conditions', () => {
 test('where() can and conditions', () => {
     const result = query(data)
         .where('id').equal(1)
-        .where('id').above(2)
+        .where('id')
+        .above(2)
         .get()
 
     expect(result).toEqual([])
@@ -95,7 +103,8 @@ test('where() can and conditions', () => {
 test('or two conditions', () => {
     const result = query(data)
         .where('id').equal(1)
-        .orWhere('id').above(2)
+        .orWhere('id')
+        .above(2)
         .get()
 
     expect(result).toEqual([data[1], data[3]])
@@ -136,7 +145,8 @@ test('order by a column descending', () => {
 test('order by two column', () => {
     const result = query(data)
         .orderBy('strval2', STRING_COMPARATOR).asc()
-        .orderBy('intval', NUMBER_COMPARATOR).desc()
+        .orderBy('intval', NUMBER_COMPARATOR)
+        .desc()
         .get()
 
     expect(result).toEqual([data[3], data[1], data[0], data[2]])
@@ -145,7 +155,8 @@ test('order by two column', () => {
 test('prevent duplicate item that staisfy two or conditions', () => {
     const result = query(data)
         .where('id').above(1)
-        .orWhere('id').equal(2)
+        .orWhere('id')
+        .equal(2)
         .get()
 
     expect(result).toEqual([data[2], data[3]])
@@ -157,9 +168,12 @@ test('query on 10000 obj be less than 50ms', () => {
     const start = now()
     query(array)
         .where('id').above(50)
-        .where('id').below(9950)
-        .orWhere('id').in([2, 3, 5, 7])
-        .where('name').contain(6)
+        .where('id')
+        .below(9950)
+        .orWhere('id')
+        .in([2, 3, 5, 7])
+        .where('name')
+        .contain(6)
         .get()
 
     const end = now()
