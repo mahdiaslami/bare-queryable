@@ -6,6 +6,12 @@ export default function where(column, returnValue) {
             return returnValue
         },
 
+        notEqual(value) {
+            this.callback = (row) => row[column] !== value
+
+            return returnValue
+        },
+
         above(value) {
             this.callback = (row) => row[column] > value
 

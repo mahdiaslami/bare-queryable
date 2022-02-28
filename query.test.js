@@ -32,6 +32,12 @@ test('where equal', () => {
     expect(result).toEqual([data[2]])
 })
 
+test('where not equal', () => {
+    const result = query(data).where('id').notEqual(2).get()
+
+    expect(result).toEqual([data[0], data[1], data[3]])
+})
+
 test('where above', () => {
     const result = query(data)
         .where('id').above(2)
