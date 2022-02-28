@@ -173,7 +173,8 @@ test('query on 10000 obj be less than 50ms', () => {
 
     const start = now()
     query(array)
-        .where('id').above(50)
+        .where('id')
+        .above(50)
         .where('id')
         .below(9950)
         .orWhere('id')
