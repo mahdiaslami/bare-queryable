@@ -4,7 +4,7 @@ import { NUMBER_COMPARATOR } from './comparators.js'
 
 function query(array) {
     return {
-        _data: array,
+        _rows: array,
         _joinCallback: null,
         _filterCallback: null,
         _limitCallback: null,
@@ -15,29 +15,29 @@ function query(array) {
         },
 
         first() {
-            this._limitCallback = (data) => data[0]
+            this._limitCallback = (rows) => rows[0]
 
             return this.call()
         },
 
         last() {
-            this._limitCallback = (data) => data[data.length - 1]
+            this._limitCallback = (rows) => rows[rows.length - 1]
 
             return this.call()
         },
 
         count() {
-            this._limitCallback = (data) => data.length
+            this._limitCallback = (rows) => rows.length
 
             return this.call()
         },
 
         call() {
-            return this._prepareResult(this._data)
+            return this._prepareResult(this._rows)
         },
 
-        _prepareResult(data) {
-            let result = this._join(data)
+        _prepareResult(rows) {
+            let result = this._join(rows)
 
             result = this._filter(result)
 
@@ -46,44 +46,44 @@ function query(array) {
             return this._limit(result)
         },
 
-        _join(data) {
+        _join(rows) {
             if (this._joinCallback) {
-                return this._joinCallback(data)
+                return this._joinCallback(rows)
             }
 
-            return data
+            return rows
         },
 
-        _filter(data) {
+        _filter(rows) {
             if (this._filterCallback) {
-                return data.filter(this._filterCallback)
+                return rows.filter(this._filterCallback)
             }
 
-            return data
+            return rows
         },
 
-        _orderBy(data) {
+        _orderBy(rows) {
             if (this._orderByCallback) {
-                return data.slice(0).sort(this._orderByCallback)
+                return rows.slice(0).sort(this._orderByCallback)
             }
 
-            return data
+            return rows
         },
 
-        _limit(data) {
+        _limit(rows) {
             if (this._limitCallback) {
-                return this._limitCallback(data)
+                return this._limitCallback(rows)
             }
 
-            return data
+            return rows
         },
 
-        crossJoin(rightData) {
-            this._joinCallback = (leftData) => {
+        crossJoin(rightRows) {
+            this._joinCallback = (leftRows) => {
                 const result = []
 
-                leftData.forEach((leftRow) => {
-                    rightData.forEach((rightRow) => {
+                leftRows.forEach((leftRow) => {
+                    rightRows.forEach((rightRow) => {
                         result.push({
                             ...leftRow,
                             ...rightRow,
