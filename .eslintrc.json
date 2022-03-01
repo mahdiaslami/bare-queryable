@@ -25,6 +25,7 @@
             "warn",
             4
         ],
+        "no-plusplus": "off",
         "no-underscore-dangle": [
             "error",
             {
@@ -34,6 +35,7 @@
                 "enforceInMethodNames": false,
                 "allowFunctionParams": false
             }
-        ]
+        ],
+        "no-use-before-define": "off"
     }
 }
