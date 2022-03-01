@@ -20,7 +20,7 @@ test('query on 10000 obj be less than 50ms', () => {
     expect(end - start).toBeLessThan(50)
 })
 
-export function factory(count) {
+function factory(count) {
     const array = []
 
     for (let i = 1; i <= count; i++) {
@@ -33,10 +33,10 @@ export function factory(count) {
     return array
 }
 
-export function now() {
+function now() {
     return (new Date()).getTime()
 }
 
-export function hash(length = 5) {
+function hash(length = 5) {
     return (Math.random() + 1).toString(36).substring(length)
 }
