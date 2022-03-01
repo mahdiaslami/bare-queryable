@@ -33,7 +33,7 @@ export const users = [
     },
 ]
 
-export const data2 = [
+export const children = [
     {
         id: 1,
         title: '1000',

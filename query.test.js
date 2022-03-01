@@ -1,7 +1,7 @@
 import query from './query.js'
 import { NUMBER_COMPARATOR, STRING_COMPARATOR, DATE_COMPARATOR } from './comparators.js'
 import {
-    users, data2,
+    users, children,
 } from './fake.js'
 
 test('get all users', () => {
@@ -171,12 +171,12 @@ test('prevent duplicate item that staisfy two or conditions', () => {
 })
 
 test('cross join two arrays', () => {
-    const result = query(users).crossJoin(data2).get()
+    const result = query(users).crossJoin(children).get()
 
     const expectedResult = []
 
     users.forEach(
-        (row) => data2.forEach(
+        (row) => children.forEach(
             (row2) => expectedResult.push({
                 ...row,
                 ...row2,
