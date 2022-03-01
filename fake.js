@@ -43,24 +43,3 @@ export const data2 = [
         title: '0100',
     },
 ]
-
-export function factory(count) {
-    const array = []
-
-    for (let i = 1; i <= count; i++) {
-        array.push({
-            id: i,
-            name: hash(),
-        })
-    }
-
-    return array
-}
-
-export function now() {
-    return (new Date()).getTime()
-}
-
-export function hash(length = 5) {
-    return (Math.random() + 1).toString(36).substring(length)
-}

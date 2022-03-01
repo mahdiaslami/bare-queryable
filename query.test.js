@@ -1,7 +1,7 @@
 import query from './query.js'
 import { NUMBER_COMPARATOR, STRING_COMPARATOR, DATE_COMPARATOR } from './comparators.js'
 import {
-    data, data2, factory, now,
+    data, data2,
 } from './fake.js'
 
 test('get all data', () => {
@@ -187,24 +187,4 @@ test('cross join two arrays', () => {
     expect(result).toEqual(
         expectedResult,
     )
-})
-
-test('query on 10000 obj be less than 50ms', () => {
-    const array = factory(10000)
-
-    const start = now()
-    query(array)
-        .where('id')
-        .above(50)
-        .where('id')
-        .below(9950)
-        .orWhere('id')
-        .in([2, 3, 5, 7])
-        .where('name')
-        .contain(6)
-        .get()
-
-    const end = now()
-
-    expect(end - start).toBeLessThan(50)
 })
