@@ -5,6 +5,7 @@ import { NUMBER_COMPARATOR } from './comparators.js'
 function query(array) {
     return {
         _data: array,
+        _joinCallback: null,
         _filterCallback: null,
         _limitCallback: null,
         _orderByCallback: null,
@@ -36,11 +37,21 @@ function query(array) {
         },
 
         _prepareResult(data) {
-            let result = this._filter(data)
+            let result = this._join(data)
+
+            result = this._filter(result)
 
             result = this._orderBy(result)
 
             return this._limit(result)
+        },
+
+        _join(data) {
+            if (this._joinCallback) {
+                return this._joinCallback(data)
+            }
+
+            return data
         },
 
         _filter(data) {
@@ -65,6 +76,25 @@ function query(array) {
             }
 
             return data
+        },
+
+        crossJoin(rightData) {
+            this._joinCallback = (leftData) => {
+                const result = []
+
+                leftData.forEach((leftRow) => {
+                    rightData.forEach((rightRow) => {
+                        result.push({
+                            ...leftRow,
+                            ...rightRow,
+                        })
+                    })
+                })
+
+                return result
+            }
+
+            return this
         },
 
         where(column) {

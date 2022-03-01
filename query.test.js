@@ -1,6 +1,8 @@
 import query from './query.js'
 import { NUMBER_COMPARATOR, STRING_COMPARATOR, DATE_COMPARATOR } from './comparators.js'
-import { data, factory, now } from './fake.js'
+import {
+    data, data2, factory, now,
+} from './fake.js'
 
 test('get all data', () => {
     const result = query(data).get()
@@ -166,6 +168,25 @@ test('prevent duplicate item that staisfy two or conditions', () => {
         .get()
 
     expect(result).toEqual([data[2], data[3]])
+})
+
+test('cross join two arrays', () => {
+    const result = query(data).crossJoin(data2).get()
+
+    const expectedResult = []
+
+    data.forEach(
+        (row) => data2.forEach(
+            (row2) => expectedResult.push({
+                ...row,
+                ...row2,
+            }),
+        ),
+    )
+
+    expect(result).toEqual(
+        expectedResult,
+    )
 })
 
 test('query on 10000 obj be less than 50ms', () => {

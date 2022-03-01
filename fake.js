@@ -33,6 +33,17 @@ export const data = [
     },
 ]
 
+export const data2 = [
+    {
+        id: 1,
+        title: '1000',
+    },
+    {
+        id: 2,
+        title: '0100',
+    },
+]
+
 export function factory(count) {
     const array = []
 
