@@ -45,3 +45,11 @@ test('order by two column', () => {
 
     expect(result).toEqual([users[3], users[1], users[0], users[2]])
 })
+
+test('order by can use nested key', () => {
+    const result = query(users)
+        .orderBy('nestedVal.age', NUMBER_COMPARATOR).asc()
+        .get()
+
+    expect(result).toEqual([users[0], users[2], users[1], users[3]])
+})

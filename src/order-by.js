@@ -1,4 +1,8 @@
+import makeGetterFunction from './helpers.js'
+
 export default function orderBy(column, comparator, returnValue) {
+    const getter = makeGetterFunction(column)
+
     return {
         _callback: comparator,
 
@@ -15,7 +19,7 @@ export default function orderBy(column, comparator, returnValue) {
         },
 
         call(a, b) {
-            return this.orderFactor * this._callback(a[column], b[column])
+            return this.orderFactor * this._callback(getter(a), getter(b))
         },
     }
 }
