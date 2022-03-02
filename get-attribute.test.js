@@ -1,6 +1,6 @@
 import makeGetterFunction from './get-attribute.js'
 
-test('get one level attribute', () => {
+test('get value of key in level one', () => {
     const obj = {
         id: 1,
     }
