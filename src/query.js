@@ -98,43 +98,43 @@ function query(array) {
         },
 
         where(column) {
-            const whereClause = where(column, this)
+            const whereExpression = where(column, this)
 
             if (this._filterCallback) {
-                this._and(whereClause)
+                this._and(whereExpression)
             } else {
-                this._filterCallback = (row) => whereClause.call(row)
+                this._filterCallback = (row) => whereExpression.call(row)
             }
 
-            return whereClause
+            return whereExpression
         },
 
         andWhere(column) {
-            const whereClause = where(column, this)
+            const whereExpression = where(column, this)
 
-            this._and(whereClause)
+            this._and(whereExpression)
 
-            return whereClause
+            return whereExpression
         },
 
-        _and(whereClause) {
+        _and(whereExpression) {
             const previousCallback = this._filterCallback
 
-            this._filterCallback = (row) => previousCallback(row) && whereClause.call(row)
+            this._filterCallback = (row) => previousCallback(row) && whereExpression.call(row)
         },
 
         orWhere(column) {
-            const whereClause = where(column, this)
+            const whereExpression = where(column, this)
 
-            this._or(whereClause)
+            this._or(whereExpression)
 
-            return whereClause
+            return whereExpression
         },
 
-        _or(whereClause) {
+        _or(whereExpression) {
             const previousCallback = this._filterCallback
 
-            this._filterCallback = (row) => previousCallback(row) || whereClause.call(row)
+            this._filterCallback = (row) => previousCallback(row) || whereExpression.call(row)
         },
 
         orderBy(column, comparator = NUMBER_COMPARATOR) {
