@@ -6,6 +6,9 @@ export const users = [
         strval: 'd',
         dateval: '11/22/2021, 11:43:48 AM',
         strval2: 'b',
+        nestedVal: {
+            age: 10,
+        },
     },
     {
         id: 1,
@@ -14,6 +17,9 @@ export const users = [
         strval: 'a',
         dateval: '10/2/2021, 11:42:48 AM',
         strval2: 'a',
+        nestedVal: {
+            age: 30,
+        },
     },
     {
         id: 2,
@@ -22,6 +28,9 @@ export const users = [
         strval: 'c',
         dateval: '11/12/2021, 11:42:50 AM',
         strval2: 'b',
+        nestedVal: {
+            age: 20,
+        },
     },
     {
         id: 3,
@@ -30,6 +39,9 @@ export const users = [
         strval: 'b',
         dateval: '11/2/2021, 11:42:48 AM',
         strval2: 'a',
+        nestedVal: {
+            age: 40,
+        },
     },
 ]
 

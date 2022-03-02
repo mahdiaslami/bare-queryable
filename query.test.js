@@ -118,6 +118,14 @@ test('or two conditions', () => {
     expect(result).toEqual([users[1], users[3]])
 })
 
+test('use nested key in conditions', () => {
+    const result = query(users)
+        .where('nestedVal.age').equal(30)
+        .get()
+
+    expect(result).toEqual([users[1]])
+})
+
 test('order by a numeric column', () => {
     const result = query(users)
         .orderBy('intval', NUMBER_COMPARATOR).asc()
