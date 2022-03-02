@@ -1,4 +1,4 @@
-import query from './query.js'
+import { query } from './index.js'
 
 test('query on 10000 obj be less than 50ms', () => {
     const array = factory(10000)
