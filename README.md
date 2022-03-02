@@ -66,6 +66,14 @@ query([...])
   .get()
 ```
 
+`column` parameter can be nested, for example:
+
+```javascript
+query([...])
+  .where('prop.id').equal(1)
+  .get()
+```
+
 - #### _where(column).equal(value)_
 
 Filters the array so that the specified column is exactly equal to the desired value.
