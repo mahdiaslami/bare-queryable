@@ -4,7 +4,7 @@ import {
     users, children,
 } from './fake.js'
 
-test('get all users', () => {
+test('get all items', () => {
     const result = query(users).get()
 
     expect(result).toEqual(users)
@@ -88,7 +88,7 @@ test('where contain', () => {
     expect(result).toEqual([users[1]])
 })
 
-test('and two conditions', () => {
+test('andWhere() can AND two conditions', () => {
     const result = query(users)
         .where('id').equal(1)
         .andWhere('id')
@@ -98,7 +98,7 @@ test('and two conditions', () => {
     expect(result).toEqual([])
 })
 
-test('where() can and conditions', () => {
+test('where() can AND two conditions', () => {
     const result = query(users)
         .where('id').equal(1)
         .where('id')
@@ -108,7 +108,7 @@ test('where() can and conditions', () => {
     expect(result).toEqual([])
 })
 
-test('or two conditions', () => {
+test('orWhere can OR two conditions', () => {
     const result = query(users)
         .where('id').equal(1)
         .orWhere('id')
