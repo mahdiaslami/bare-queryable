@@ -1,53 +1,38 @@
 import makeGetterFunction from './helpers.js'
 
-test('get value of key in level one', () => {
-    const obj = {
+const obj = {
+    id: 1,
+    two: {
         id: 1,
-    }
+        three: {
+            id: 1,
+            four: {
+                id: 1,
+            },
+        },
+    },
+}
 
+test('get value of key in level one', () => {
     const getId = makeGetterFunction('id')
 
     expect(getId(obj)).toEqual(1)
 })
 
 test('get value of key in level two', () => {
-    const obj = {
-        prop: {
-            id: 1,
-        },
-    }
-
-    const getId = makeGetterFunction('prop.id')
+    const getId = makeGetterFunction('two.id')
 
     expect(getId(obj)).toEqual(1)
 })
 
 test('get value of key in level three', () => {
-    const obj = {
-        prop: {
-            prop: {
-                id: 1,
-            },
-        },
-    }
-
-    const getId = makeGetterFunction('prop.prop.id')
+    const getId = makeGetterFunction('two.three.id')
 
     expect(getId(obj)).toEqual(1)
 })
 
 test('get value of key in level four', () => {
-    const obj = {
-        prop: {
-            prop: {
-                prop: {
-                    id: 1,
-                },
-            },
-        },
-    }
-
-    const getId = makeGetterFunction('prop.prop.prop.id')
+    const getId = makeGetterFunction('two.three.four.id')
 
     expect(getId(obj)).toEqual(1)
 })
