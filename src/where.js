@@ -5,55 +5,55 @@ export default function where(column, returnValue) {
 
     return {
         equal(value) {
-            this.callback = (row) => getter(row) === value
+            this.callback = (a) => a === value
 
             return returnValue
         },
 
         notEqual(value) {
-            this.callback = (row) => getter(row) !== value
+            this.callback = (a) => a !== value
 
             return returnValue
         },
 
         above(value) {
-            this.callback = (row) => getter(row) > value
+            this.callback = (a) => a > value
 
             return returnValue
         },
 
         aboveOrEqual(value) {
-            this.callback = (row) => getter(row) >= value
+            this.callback = (a) => a >= value
 
             return returnValue
         },
 
         below(value) {
-            this.callback = (row) => getter(row) < value
+            this.callback = (a) => a < value
 
             return returnValue
         },
 
         belowOrEqual(value) {
-            this.callback = (row) => getter(row) <= value
+            this.callback = (a) => a <= value
 
             return returnValue
         },
 
         contain(value) {
-            this.callback = (row) => getter(row).includes(value)
+            this.callback = (a) => a.includes(value)
 
             return returnValue
         },
 
         in(array) {
-            this.callback = (row) => array.includes(getter(row))
+            this.callback = (a) => array.includes(a)
 
             return returnValue
         },
 
         call(row) {
-            return this.callback(row)
+            return this.callback(getter(row))
         },
     }
 }
