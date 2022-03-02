@@ -1,4 +1,4 @@
-import makeGetterFunction from './get-attribute.js'
+import makeGetterFunction from './helpers.js'
 
 test('get value of key in level one', () => {
     const obj = {
