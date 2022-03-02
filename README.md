@@ -149,6 +149,13 @@ query([...])
   .get()
 ```
 
+`column` parameter can be nested, for example:
+
+```javascript
+query([...])
+  .order('prop.id').equal(1)
+  .get()
+
 - #### _DATE_COMPARATOR_
 
 A callback that can compare two Date.
