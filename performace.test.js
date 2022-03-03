@@ -1,3 +1,4 @@
+/* eslint-disable newline-per-chained-call */
 import { query } from './index.js'
 
 test('query on 10000 obj be less than 50ms', () => {
@@ -5,14 +6,10 @@ test('query on 10000 obj be less than 50ms', () => {
 
     const start = now()
     query(array)
-        .where('id')
-        .above(50)
-        .where('id')
-        .below(9950)
-        .orWhere('id')
-        .in([2, 3, 5, 7])
-        .where('name')
-        .contain(6)
+        .where('id').above(50)
+        .where('id').below(9950)
+        .orWhere('id').in([2, 3, 5, 7])
+        .where('name').contain(6)
         .get()
 
     const end = now()
