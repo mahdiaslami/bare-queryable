@@ -7,19 +7,19 @@ export default function orderBy(column, comparator, returnValue) {
         _callback: comparator,
 
         asc() {
-            this.orderFactor = 1
+            this._orderFactor = 1
 
             return returnValue
         },
 
         desc() {
-            this.orderFactor = -1
+            this._orderFactor = -1
 
             return returnValue
         },
 
         call(a, b) {
-            return this.orderFactor * this._callback(getter(a), getter(b))
+            return this._orderFactor * this._callback(getter(a), getter(b))
         },
     }
 }
