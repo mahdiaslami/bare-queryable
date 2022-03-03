@@ -30,16 +30,16 @@ test('get count of items', () => {
 test('cross join two arrays', () => {
     const result = query(users).crossJoin(parents).get()
 
-    const expectedResult = []
-
-    users.forEach(
-        (row) => parents.forEach(
-            (row2) => expectedResult.push({
-                ...row,
-                ...row2,
-            }),
-        ),
-    )
+    const expectedResult = [
+        { ...users[0], ...parents[0] },
+        { ...users[0], ...parents[1] },
+        { ...users[1], ...parents[0] },
+        { ...users[1], ...parents[1] },
+        { ...users[2], ...parents[0] },
+        { ...users[2], ...parents[1] },
+        { ...users[3], ...parents[0] },
+        { ...users[3], ...parents[1] },
+    ]
 
     expect(result).toEqual(
         expectedResult,
