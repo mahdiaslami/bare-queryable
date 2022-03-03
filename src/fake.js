@@ -1,6 +1,7 @@
 export const users = [
     {
         id: 0,
+        parent_id: 0,
         name: 'aaaa',
         intval: 3,
         strval: 'd',
@@ -12,6 +13,7 @@ export const users = [
     },
     {
         id: 1,
+        parent_id: 0,
         name: 'abaa',
         intval: 0,
         strval: 'a',
@@ -23,6 +25,7 @@ export const users = [
     },
     {
         id: 2,
+        parent_id: 1,
         name: 'aaca',
         intval: 2,
         strval: 'c',
@@ -47,11 +50,11 @@ export const users = [
 
 export const children = [
     {
-        id: 1,
+        id: 0,
         title: '1000',
     },
     {
-        id: 2,
+        id: 1,
         title: '0100',
     },
 ]
