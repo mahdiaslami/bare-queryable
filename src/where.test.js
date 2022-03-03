@@ -1,4 +1,5 @@
 import query from './query.js'
+import where from './where.js'
 import {
     users,
 } from './fake.js'
@@ -99,6 +100,21 @@ test('use nested key in conditions', () => {
         .get()
 
     expect(result).toEqual([users[1]])
+})
+
+test('use nested key work for conditions', () => {
+    const whereExpression = where('first.id', null)
+
+    // eslint-disable-next-line no-underscore-dangle
+    whereExpression._callback = (a) => a
+
+    expect(
+        whereExpression.call({
+            first: {
+                id: 'result',
+            },
+        }),
+    ).toEqual('result')
 })
 
 test('prevent duplicate item that staisfy two OR conditions', () => {
