@@ -1,6 +1,6 @@
 import query from './query.js'
 import {
-    users, children,
+    users, parents,
 } from './fake.js'
 
 test('get all items', () => {
@@ -28,12 +28,12 @@ test('get count of items', () => {
 })
 
 test('cross join two arrays', () => {
-    const result = query(users).crossJoin(children).get()
+    const result = query(users).crossJoin(parents).get()
 
     const expectedResult = []
 
     users.forEach(
-        (row) => children.forEach(
+        (row) => parents.forEach(
             (row2) => expectedResult.push({
                 ...row,
                 ...row2,
