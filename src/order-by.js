@@ -5,6 +5,7 @@ export default function orderBy(column, comparator, returnValue) {
 
     return {
         _callback: comparator,
+        _orderFactor: 1,
 
         asc() {
             this._orderFactor = 1
