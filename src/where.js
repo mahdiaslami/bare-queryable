@@ -1,7 +1,7 @@
 import makeGetterFunction from './helpers.js'
 
 export default function where(column, returnValue) {
-    const getter = makeGetterFunction(column)
+    const columnGetter = makeGetterFunction(column)
 
     return {
         equal(value) {
@@ -53,7 +53,7 @@ export default function where(column, returnValue) {
         },
 
         call(row) {
-            return this._callback(getter(row))
+            return this._callback(columnGetter(row))
         },
     }
 }
