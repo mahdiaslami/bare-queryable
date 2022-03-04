@@ -4,56 +4,74 @@ export default function where(column, returnValue) {
     const columnGetter = makeGetterFunction(column)
 
     return {
-        equal(value) {
-            this._callback = (a) => a === value
+        _value: null,
 
-            return returnValue
+        equal(value) {
+            return this._prepare(
+                value,
+                (a, b) => a === b,
+            )
         },
 
         notEqual(value) {
-            this._callback = (a) => a !== value
-
-            return returnValue
+            return this._prepare(
+                value,
+                (a, b) => a !== b,
+            )
         },
 
         above(value) {
-            this._callback = (a) => a > value
-
-            return returnValue
+            return this._prepare(
+                value,
+                (a, b) => a > b,
+            )
         },
 
         aboveOrEqual(value) {
-            this._callback = (a) => a >= value
-
-            return returnValue
+            return this._prepare(
+                value,
+                (a, b) => a >= b,
+            )
         },
 
         below(value) {
-            this._callback = (a) => a < value
-
-            return returnValue
+            return this._prepare(
+                value,
+                (a, b) => a < b,
+            )
         },
 
         belowOrEqual(value) {
-            this._callback = (a) => a <= value
-
-            return returnValue
+            return this._prepare(
+                value,
+                (a, b) => a <= b,
+            )
         },
 
         contain(value) {
-            this._callback = (a) => a.includes(value)
-
-            return returnValue
+            return this._prepare(
+                value,
+                (a, b) => a.includes(b),
+            )
         },
 
         in(array) {
-            this._callback = (a) => array.includes(a)
+            return this._prepare(
+                array,
+                (a, b) => b.includes(a),
+            )
+        },
+
+        _prepare(value, callback) {
+            this._value = value
+
+            this._callback = callback
 
             return returnValue
         },
 
         call(row) {
-            return this._callback(columnGetter(row))
+            return this._callback(columnGetter(row), this._value)
         },
     }
 }
