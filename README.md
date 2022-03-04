@@ -135,6 +135,16 @@ query([...])
   .get()
 ```
 
+- #### _Compare two columns_
+
+If you want to compare two columns you can use `.col` attribute.
+
+```javascript
+query([...])
+  .where('name').col.notEqual('family')
+  .get()
+```
+
 ### Order by
 
 Sorts columns ascending or descending.
