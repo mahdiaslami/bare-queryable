@@ -2,10 +2,16 @@ import makeGetterFunction from './helpers.js'
 
 export default function where(column, returnValue) {
     return {
-        _value: null,
         _callback: null,
         _columnGetter: makeGetterFunction(column),
         _returnValue: returnValue,
+        _compareTwoColumns: false,
+
+        get col() {
+            this._compareTwoColumns = true
+
+            return this
+        },
 
         equal(value) {
             return this._prepare(
@@ -64,7 +70,11 @@ export default function where(column, returnValue) {
         },
 
         _prepare(value, callback) {
-            this._value = value
+            if (this._compareTwoColumns) {
+                this._valueGetter = makeGetterFunction(value)
+            } else {
+                this._valueGetter = () => value
+            }
 
             this._callback = callback
 
@@ -74,7 +84,7 @@ export default function where(column, returnValue) {
         call(row) {
             return this._callback(
                 this._columnGetter(row),
-                this._value,
+                this._valueGetter(row),
             )
         },
     }

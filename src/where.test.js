@@ -106,7 +106,10 @@ test('use nested key work for conditions', () => {
     const whereExpression = where('first.id', null)
 
     // eslint-disable-next-line no-underscore-dangle
-    whereExpression._callback = (a) => a
+    whereExpression._prepare(
+        'result',
+        (a) => a,
+    )
 
     expect(
         whereExpression.call({
@@ -125,4 +128,12 @@ test('prevent duplicate item that staisfy two OR conditions', () => {
         .get()
 
     expect(result).toEqual([users[2], users[3]])
+})
+
+test('it can compare two columns', () => {
+    const result = query(users)
+        .where('id').col.equal('intval')
+        .get()
+
+    expect(result).toEqual([users[2]])
 })
