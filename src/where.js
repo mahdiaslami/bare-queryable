@@ -1,10 +1,11 @@
 import makeGetterFunction from './helpers.js'
 
 export default function where(column, returnValue) {
-    const columnGetter = makeGetterFunction(column)
-
     return {
         _value: null,
+        _callback: null,
+        _columnGetter: makeGetterFunction(column),
+        _returnValue: returnValue,
 
         equal(value) {
             return this._prepare(
@@ -67,11 +68,14 @@ export default function where(column, returnValue) {
 
             this._callback = callback
 
-            return returnValue
+            return this._returnValue
         },
 
         call(row) {
-            return this._callback(columnGetter(row), this._value)
+            return this._callback(
+                this._columnGetter(row),
+                this._value,
+            )
         },
     }
 }
