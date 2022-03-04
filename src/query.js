@@ -1,3 +1,4 @@
+import join from './join.js'
 import where from './where.js'
 import orderBy from './order-by.js'
 import { NUMBER_COMPARATOR } from './comparators.js'
@@ -95,6 +96,14 @@ function query(array) {
             }
 
             return this
+        },
+
+        join() {
+            const joinExpression = join(this)
+
+            this._joinCallback = () => joinExpression.call()
+
+            return joinExpression
         },
 
         where(column) {
