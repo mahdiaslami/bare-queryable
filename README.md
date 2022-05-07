@@ -165,6 +165,7 @@ query([...])
 query([...])
   .order('prop.id').equal(1)
   .get()
+```
 
 - #### _DATE_COMPARATOR_
 
