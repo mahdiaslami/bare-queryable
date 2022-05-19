@@ -1,12 +1,9 @@
 Query on array
 ==============
 
-bare-queryable help you to query on a array of objects 
-as SQL way.
+bare-queryable help you to query on an array of objects as SQL way.
 
-In usual way,  you need to create a callback methods
-for Javascript array helpers like filter() and etc.
-But here you only do what you need.
+In the usual way,  you need to create a callback method for javascript array helpers like filter() and etc, But here you only do what you need.
 
 Introduction
 ------------
@@ -76,31 +73,35 @@ query([...])
 
 - #### _where(column).equal(value)_
 
-Filters the array so that the specified column is exactly equal to the desired value.
+Filters the array so that the column value is exactly equal to the desired value. We use the `===` operator for this comparison.
+
+- #### _where(column).notEqual(value)_
+
+Filters the array so that the column value is not equal to the desired value. We use the `!==` operator for this comparison.
 
 - #### _where(column).above(value)_
 
-Filters the array so that the specified column is greater than the desired value.
+Filters the array so that the column value is greater than the desired value.
 
 - #### _where(column).aboveOrEqual(value)_
 
-Filters the array so that the specified column is greater than or equal to the desired value.
+Filters the array so that the column value is greater than or equal to the desired value.
 
 - #### _where(column).below(value)_
 
-Filters the array so that the specified column is lower than the desired value.
+Filters the array so that the column value is lower than the desired value.
 
 - #### _where(column).belowOrEqual(value)_
 
-Filters the array so that the specified column is lower than or equal to the desired value.
+Filters the array so that the column value is lower than or equal to the desired value.
 
 - #### _where(column).contain(value)_
 
-Filters the array so that the specified column is contain the desired value.
+Filters the array so that the column value contains the desired value.
 
 - #### _where(column).in(array)_
 
-Filters the array so that the specified column is inside the desired array.
+Filters the array so that the column value is inside the desired array.
 
 ```javascript
 query([...])
@@ -137,7 +138,7 @@ query([...])
 
 - #### _Compare two columns_
 
-If you want to compare two columns you can use `.col` attribute.
+If you want to compare two columns you can use the `.col` attribute.
 
 ```javascript
 query([...])
@@ -169,12 +170,12 @@ query([...])
 
 - #### _DATE_COMPARATOR_
 
-A callback that can compare two Date.
+A callback that can compare two Dates.
 
 - #### _STRING_COMPARATOR_
 
-A callback that can compare two string.
+A callback that can compare two strings.
 
 - #### _NUMBER_COMPARATOR_
 
-A callback that can compare two number.
+A callback that can compare two numbers.
