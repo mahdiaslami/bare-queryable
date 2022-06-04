@@ -1,5 +1,6 @@
 /* eslint-disable newline-per-chained-call */
 import { query } from './index.js'
+import { NUMBER_COMPARATOR, STRING_COMPARATOR } from './src/comparators.js'
 
 test('query on 10000 obj be less than 50ms', () => {
     const array = factory(10000)
@@ -10,6 +11,8 @@ test('query on 10000 obj be less than 50ms', () => {
         .where('id').below(9950)
         .orWhere('id').in([2, 3, 5, 7])
         .where('name').contain(6)
+        .orderBy('name', STRING_COMPARATOR).asc()
+        .orderBy('id', NUMBER_COMPARATOR).desc()
         .get()
 
     const end = now()
