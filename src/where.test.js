@@ -48,7 +48,7 @@ test('where below or equal', () => {
     expect(result).toEqual([users[0], users[1]])
 })
 
-test('where in', () => {
+test('where in array', () => {
     const result = query(users)
         .where('id').in([1, 3])
         .get()
@@ -56,7 +56,7 @@ test('where in', () => {
     expect(result).toEqual([users[1], users[3]])
 })
 
-test('where contain', () => {
+test('where contains', () => {
     const result = query(users)
         .where('name').contain('b')
         .get()
@@ -130,7 +130,7 @@ test('prevent duplicate item that staisfy two OR conditions', () => {
     expect(result).toEqual([users[2], users[3]])
 })
 
-test('it can compare two columns', () => {
+test('compare two columns', () => {
     const result = query(users)
         .where('id').col.equal('intval')
         .get()
