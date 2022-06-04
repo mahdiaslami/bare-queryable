@@ -80,30 +80,37 @@ function query(array) {
         },
 
         crossJoin(rightRows) {
+            return this._outerJoin(rightRows, {
+                call() {
+                    return true
+                },
+            }, this)
+        },
+
+        join(rightRows) {
+            return this._outerJoin(rightRows, join(this))
+        },
+
+        // TODO: Improve name.
+        _outerJoin(rightRows, joinExpression, returnValue = joinExpression) {
             this._joinCallback = (leftRows) => {
                 const result = []
 
                 leftRows.forEach((leftRow) => {
                     rightRows.forEach((rightRow) => {
-                        result.push({
-                            ...leftRow,
-                            ...rightRow,
-                        })
+                        if (joinExpression.call(leftRow, rightRow)) {
+                            result.push({
+                                ...leftRow,
+                                ...rightRow,
+                            })
+                        }
                     })
                 })
 
                 return result
             }
 
-            return this
-        },
-
-        join() {
-            const joinExpression = join(this)
-
-            this._joinCallback = () => joinExpression.call()
-
-            return joinExpression
+            return returnValue
         },
 
         where(column) {

@@ -81,10 +81,10 @@ export default function where(column, returnValue) {
             return this._returnValue
         },
 
-        call(row) {
+        call(firstRow, secondRow = firstRow) {
             return this._callback(
-                this._columnGetter(row),
-                this._valueGetter(row),
+                this._columnGetter(firstRow),
+                this._valueGetter(secondRow),
             )
         },
     }

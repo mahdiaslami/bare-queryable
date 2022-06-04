@@ -24,7 +24,7 @@ test('cross join two arrays', () => {
 
 test('inner join two arrays on two column', () => {
     const result = query(users)
-        .join(parents).on('id').equal('parent_id')
+        .join(parents).on('parent_id').col.equal('id')
         .get()
 
     const expectedResult = [
