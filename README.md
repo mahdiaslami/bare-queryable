@@ -3,7 +3,7 @@ Query on array
 
 bare-queryable help you to query on an array of objects as SQL way.
 
-In the usual way,  you need to create a callback method for javascript array helpers like filter() and etc, But here you only do what you need.
+In the usual way, you need to create a callback method for javascript array helpers like filter() and etc, But here you only do what you need.
 
 Introduction
 ------------
