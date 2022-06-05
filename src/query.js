@@ -87,7 +87,7 @@ function query(array) {
                 call() {
                     return true
                 },
-            }, this)
+            }, false, this)
         },
 
         innerJoin(rightRows) {
@@ -98,31 +98,34 @@ function query(array) {
             return this._outerJoin(rightRows, join(this))
         },
 
-        leftJoin() {
-            this._joinCallback = () => [
-                { ...users[0], ...parents[0] },
-                { ...users[1], ...parents[0] },
-                { ...users[2], ...parents[1] },
-                { ...users[3] },
-            ]
-
-            return join(this)
+        leftJoin(rightRows) {
+            return this._outerJoin(rightRows, join(this), true)
         },
 
         // TODO: Improve name.
-        _outerJoin(rightRows, joinExpression, returnValue = joinExpression) {
+        _outerJoin(rightRows, joinExpression, leftJoin = false, returnValue = joinExpression) {
             this._joinCallback = (leftRows) => {
                 const result = []
 
                 leftRows.forEach((leftRow) => {
+                    let holdLeftRow = leftJoin
+
                     rightRows.forEach((rightRow) => {
                         if (joinExpression.call(leftRow, rightRow)) {
                             result.push({
                                 ...leftRow,
                                 ...rightRow,
                             })
+
+                            holdLeftRow = false
                         }
                     })
+
+                    if (holdLeftRow) {
+                        result.push({
+                            ...leftRow,
+                        })
+                    }
                 })
 
                 return result
