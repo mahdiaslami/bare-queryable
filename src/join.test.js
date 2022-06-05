@@ -22,7 +22,7 @@ test('cross join two arrays', () => {
     )
 })
 
-test('inner join two arrays on two column', () => {
+test('inner join two arrays', () => {
     const result = query(users)
         .join(parents).on('parent_id').col.equal('id')
         .get()
@@ -47,6 +47,23 @@ test('innerJoin helper is same as join', () => {
         { ...users[0], ...parents[0] },
         { ...users[1], ...parents[0] },
         { ...users[2], ...parents[1] },
+    ]
+
+    expect(result).toEqual(
+        expectedResult,
+    )
+})
+
+test('left join two arrays', () => {
+    const result = query(users)
+        .leftJoin(parents).on('parent_id').col.equal('id')
+        .get()
+
+    const expectedResult = [
+        { ...users[0], ...parents[0] },
+        { ...users[1], ...parents[0] },
+        { ...users[2], ...parents[1] },
+        { ...users[3] },
     ]
 
     expect(result).toEqual(

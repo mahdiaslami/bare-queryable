@@ -2,6 +2,9 @@ import join from './join.js'
 import where from './where.js'
 import orderBy from './order-by.js'
 import { NUMBER_COMPARATOR } from './comparators.js'
+import {
+    users, parents,
+} from './fake.js'
 
 function query(array) {
     return {
@@ -93,6 +96,17 @@ function query(array) {
 
         join(rightRows) {
             return this._outerJoin(rightRows, join(this))
+        },
+
+        leftJoin() {
+            this._joinCallback = () => [
+                { ...users[0], ...parents[0] },
+                { ...users[1], ...parents[0] },
+                { ...users[2], ...parents[1] },
+                { ...users[3] },
+            ]
+
+            return join(this)
         },
 
         // TODO: Improve name.
