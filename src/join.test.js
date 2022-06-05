@@ -70,3 +70,20 @@ test('left join two arrays', () => {
         expectedResult,
     )
 })
+
+test('right join two arrays', () => {
+    const result = query(users)
+        .rightJoin(parents).on('parent_id').col.equal('id')
+        .get()
+
+    const expectedResult = [
+        { ...users[0], ...parents[0] },
+        { ...users[1], ...parents[0] },
+        { ...users[2], ...parents[1] },
+        { ...parents[2] },
+    ]
+
+    expect(result).toEqual(
+        expectedResult,
+    )
+})
