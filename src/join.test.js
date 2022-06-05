@@ -37,3 +37,19 @@ test('inner join two arrays on two column', () => {
         expectedResult,
     )
 })
+
+test('innerJoin helper is same as join', () => {
+    const result = query(users)
+        .innerJoin(parents).on('parent_id').col.equal('id')
+        .get()
+
+    const expectedResult = [
+        { ...users[0], ...parents[0] },
+        { ...users[1], ...parents[0] },
+        { ...users[2], ...parents[1] },
+    ]
+
+    expect(result).toEqual(
+        expectedResult,
+    )
+})
