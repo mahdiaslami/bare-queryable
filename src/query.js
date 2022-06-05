@@ -87,6 +87,10 @@ function query(array) {
             }, this)
         },
 
+        innerJoin(rightRows) {
+            return this.join(rightRows)
+        },
+
         join(rightRows) {
             return this._outerJoin(rightRows, join(this))
         },
