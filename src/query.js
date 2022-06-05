@@ -2,9 +2,6 @@ import join from './join.js'
 import where from './where.js'
 import orderBy from './order-by.js'
 import { NUMBER_COMPARATOR } from './comparators.js'
-import {
-    users, parents,
-} from './fake.js'
 
 function query(array) {
     return {
@@ -52,7 +49,7 @@ function query(array) {
 
         _join(rows) {
             if (this._joinCallback) {
-                return this._joinCallback(rows)
+                return rows.reduce(this._joinCallback, [])
             }
 
             return rows
@@ -83,7 +80,7 @@ function query(array) {
         },
 
         crossJoin(rightRows) {
-            return this._outerJoin(rightRows, {
+            return this._prepareJoin(rightRows, {
                 call() {
                     return true
                 },
@@ -95,40 +92,35 @@ function query(array) {
         },
 
         join(rightRows) {
-            return this._outerJoin(rightRows, join(this))
+            return this._prepareJoin(rightRows, join(this))
         },
 
         leftJoin(rightRows) {
-            return this._outerJoin(rightRows, join(this), true)
+            return this._prepareJoin(rightRows, join(this), true)
         },
 
-        // TODO: Improve name.
-        _outerJoin(rightRows, joinExpression, leftJoin = false, returnValue = joinExpression) {
-            this._joinCallback = (leftRows) => {
-                const result = []
+        _prepareJoin(rightRows, joinExpression, leftJoin = false, returnValue = joinExpression) {
+            this._joinCallback = (perviuse, leftRow) => {
+                let holdLeftRow = leftJoin
 
-                leftRows.forEach((leftRow) => {
-                    let holdLeftRow = leftJoin
-
-                    rightRows.forEach((rightRow) => {
-                        if (joinExpression.call(leftRow, rightRow)) {
-                            result.push({
-                                ...leftRow,
-                                ...rightRow,
-                            })
-
-                            holdLeftRow = false
-                        }
-                    })
-
-                    if (holdLeftRow) {
-                        result.push({
+                rightRows.forEach((rightRow) => {
+                    if (joinExpression.call(leftRow, rightRow)) {
+                        perviuse.push({
                             ...leftRow,
+                            ...rightRow,
                         })
+
+                        holdLeftRow = false
                     }
                 })
 
-                return result
+                if (holdLeftRow) {
+                    perviuse.push({
+                        ...leftRow,
+                    })
+                }
+
+                return perviuse
             }
 
             return returnValue
