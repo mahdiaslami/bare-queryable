@@ -1,12 +1,9 @@
 import {
-    on, crossJoin, innerJoin, leftJoin,
+    on, crossJoin, innerJoin, leftJoin, rightJoin,
 } from './join.js'
 import where from './where.js'
 import orderBy from './order-by.js'
 import { NUMBER_COMPARATOR } from './comparators.js'
-import {
-    users, parents,
-} from './fake.js'
 
 function query(array) {
     return {
@@ -110,15 +107,12 @@ function query(array) {
             return onExpression
         },
 
-        rightJoin() {
-            this._joinCallback = () => [
-                { ...users[0], ...parents[0] },
-                { ...users[1], ...parents[0] },
-                { ...users[2], ...parents[1] },
-                { ...parents[2] },
-            ]
+        rightJoin(rightRows) {
+            const onExpression = on(this)
 
-            return on(this)
+            this._joinCallback = (leftRows) => rightJoin(leftRows, rightRows, onExpression)
+
+            return onExpression
         },
 
         where(column) {

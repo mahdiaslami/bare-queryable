@@ -68,3 +68,28 @@ export function leftJoin(leftRows, rightRows, onExpression) {
         return previous
     }, [])
 }
+
+export function rightJoin(leftRows, rightRows, onExpression) {
+    return rightRows.reduce((previous, rightRow) => {
+        let hold = true
+
+        leftRows.forEach((leftRow) => {
+            if (onExpression.call(leftRow, rightRow)) {
+                previous.push({
+                    ...leftRow,
+                    ...rightRow,
+                })
+
+                hold = false
+            }
+        })
+
+        if (hold) {
+            previous.push({
+                ...rightRow,
+            })
+        }
+
+        return previous
+    }, [])
+}
