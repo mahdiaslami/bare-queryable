@@ -1,6 +1,6 @@
 import where from './where.js'
 
-export default function join(returnValue) {
+export function on(returnValue) {
     return {
         _whereExpression: null,
 
@@ -12,6 +12,14 @@ export default function join(returnValue) {
 
         call(leftRow, rightRow) {
             return this._whereExpression.call(leftRow, rightRow)
+        },
+    }
+}
+
+export function join(leftRows, rightRows) {
+    return {
+        call() {
+
         },
     }
 }

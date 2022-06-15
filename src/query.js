@@ -1,4 +1,4 @@
-import join from './join.js'
+import { on } from './join.js'
 import where from './where.js'
 import orderBy from './order-by.js'
 import { NUMBER_COMPARATOR } from './comparators.js'
@@ -95,11 +95,11 @@ function query(array) {
         },
 
         join(rightRows) {
-            return this._prepareJoin(rightRows, join(this))
+            return this._prepareJoin(rightRows, on(this))
         },
 
         leftJoin(rightRows) {
-            return this._prepareJoin(rightRows, join(this), true)
+            return this._prepareJoin(rightRows, on(this), true)
         },
 
         rightJoin() {
@@ -110,15 +110,15 @@ function query(array) {
                 { ...parents[2] },
             ]
 
-            return join(this)
+            return on(this)
         },
 
-        _prepareJoin(rightRows, joinExpression, leftJoin = false, returnValue = joinExpression) {
+        _prepareJoin(rightRows, onExpression, leftJoin = false, returnValue = onExpression) {
             this._joinCallback = (previous, leftRow) => {
                 let holdLeftRow = leftJoin
 
                 rightRows.forEach((rightRow) => {
-                    if (joinExpression.call(leftRow, rightRow)) {
+                    if (onExpression.call(leftRow, rightRow)) {
                         previous.push({
                             ...leftRow,
                             ...rightRow,
