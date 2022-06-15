@@ -114,12 +114,12 @@ function query(array) {
         },
 
         _prepareJoin(rightRows, joinExpression, leftJoin = false, returnValue = joinExpression) {
-            this._joinCallback = (perviuse, leftRow) => {
+            this._joinCallback = (previous, leftRow) => {
                 let holdLeftRow = leftJoin
 
                 rightRows.forEach((rightRow) => {
                     if (joinExpression.call(leftRow, rightRow)) {
-                        perviuse.push({
+                        previous.push({
                             ...leftRow,
                             ...rightRow,
                         })
@@ -129,12 +129,12 @@ function query(array) {
                 })
 
                 if (holdLeftRow) {
-                    perviuse.push({
+                    previous.push({
                         ...leftRow,
                     })
                 }
 
-                return perviuse
+                return previous
             }
 
             return returnValue
