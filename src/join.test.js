@@ -9,12 +9,16 @@ test('cross join two arrays', () => {
     const expectedResult = [
         { ...users[0], ...parents[0] },
         { ...users[0], ...parents[1] },
+        { ...users[0], ...parents[2] },
         { ...users[1], ...parents[0] },
         { ...users[1], ...parents[1] },
+        { ...users[1], ...parents[2] },
         { ...users[2], ...parents[0] },
         { ...users[2], ...parents[1] },
+        { ...users[2], ...parents[2] },
         { ...users[3], ...parents[0] },
         { ...users[3], ...parents[1] },
+        { ...users[3], ...parents[2] },
     ]
 
     expect(result).toEqual(
