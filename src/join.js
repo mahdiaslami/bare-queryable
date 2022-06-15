@@ -46,7 +46,7 @@ export function innerJoin(leftRows, rightRows, onExpression) {
 
 export function leftJoin(leftRows, rightRows, onExpression) {
     return leftRows.reduce((previous, leftRow) => {
-        let holdLeftRow = true
+        let hold = true
 
         rightRows.forEach((rightRow) => {
             if (onExpression.call(leftRow, rightRow)) {
@@ -55,11 +55,11 @@ export function leftJoin(leftRows, rightRows, onExpression) {
                     ...rightRow,
                 })
 
-                holdLeftRow = false
+                hold = false
             }
         })
 
-        if (holdLeftRow) {
+        if (hold) {
             previous.push({
                 ...leftRow,
             })
