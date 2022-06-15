@@ -1,4 +1,6 @@
-import { on } from './join.js'
+import {
+    on, crossJoin, innerJoin, leftJoin,
+} from './join.js'
 import where from './where.js'
 import orderBy from './order-by.js'
 import { NUMBER_COMPARATOR } from './comparators.js'
@@ -52,7 +54,7 @@ function query(array) {
 
         _join(rows) {
             if (this._joinCallback) {
-                return rows.reduce(this._joinCallback, [])
+                return this._joinCallback(rows)
             }
 
             return rows
@@ -83,11 +85,9 @@ function query(array) {
         },
 
         crossJoin(rightRows) {
-            return this._prepareJoin(rightRows, {
-                call() {
-                    return true
-                },
-            }, false, this)
+            this._joinCallback = (leftRows) => crossJoin(leftRows, rightRows)
+
+            return this
         },
 
         innerJoin(rightRows) {
@@ -95,11 +95,19 @@ function query(array) {
         },
 
         join(rightRows) {
-            return this._prepareJoin(rightRows, on(this))
+            const onExpression = on(this)
+
+            this._joinCallback = (leftRows) => innerJoin(leftRows, rightRows, onExpression)
+
+            return onExpression
         },
 
         leftJoin(rightRows) {
-            return this._prepareJoin(rightRows, on(this), true)
+            const onExpression = on(this)
+
+            this._joinCallback = (leftRows) => leftJoin(leftRows, rightRows, onExpression)
+
+            return onExpression
         },
 
         rightJoin() {
@@ -111,33 +119,6 @@ function query(array) {
             ]
 
             return on(this)
-        },
-
-        _prepareJoin(rightRows, onExpression, leftJoin = false, returnValue = onExpression) {
-            this._joinCallback = (previous, leftRow) => {
-                let holdLeftRow = leftJoin
-
-                rightRows.forEach((rightRow) => {
-                    if (onExpression.call(leftRow, rightRow)) {
-                        previous.push({
-                            ...leftRow,
-                            ...rightRow,
-                        })
-
-                        holdLeftRow = false
-                    }
-                })
-
-                if (holdLeftRow) {
-                    previous.push({
-                        ...leftRow,
-                    })
-                }
-
-                return previous
-            }
-
-            return returnValue
         },
 
         where(column) {
