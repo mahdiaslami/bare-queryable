@@ -1,6 +1,4 @@
-import {
-    on, crossJoin, innerJoin, leftJoin, rightJoin,
-} from './join.js'
+import { join, on } from './join.js'
 import where from './where.js'
 import orderBy from './order-by.js'
 import { NUMBER_COMPARATOR } from './comparators.js'
@@ -82,7 +80,7 @@ function query(array) {
         },
 
         crossJoin(rightRows) {
-            this._joinCallback = (leftRows) => crossJoin(leftRows, rightRows)
+            this._joinCallback = (leftRows) => join(leftRows, rightRows).call()
 
             return this
         },
@@ -94,7 +92,7 @@ function query(array) {
         join(rightRows) {
             const onExpression = on(this)
 
-            this._joinCallback = (leftRows) => innerJoin(leftRows, rightRows, onExpression)
+            this._joinCallback = (leftRows) => join(leftRows, rightRows).setOn(onExpression).call()
 
             return onExpression
         },
@@ -102,7 +100,8 @@ function query(array) {
         leftJoin(rightRows) {
             const onExpression = on(this)
 
-            this._joinCallback = (leftRows) => leftJoin(leftRows, rightRows, onExpression)
+            this._joinCallback = (leftRows) => join(leftRows, rightRows)
+                .setOn(onExpression).holdLeft().call()
 
             return onExpression
         },
@@ -110,7 +109,8 @@ function query(array) {
         rightJoin(rightRows) {
             const onExpression = on(this)
 
-            this._joinCallback = (leftRows) => rightJoin(leftRows, rightRows, onExpression)
+            this._joinCallback = (leftRows) => join(leftRows, rightRows)
+                .setOn(onExpression).holdRight().call()
 
             return onExpression
         },

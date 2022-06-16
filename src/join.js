@@ -16,28 +16,12 @@ export function on(returnValue) {
     }
 }
 
-export function crossJoin(leftRows, rightRows) {
-    return join(leftRows, rightRows).call()
-}
-
-export function innerJoin(leftRows, rightRows, onExpression) {
-    return join(leftRows, rightRows).setOn(onExpression).call()
-}
-
-export function leftJoin(leftRows, rightRows, onExpression) {
-    return join(leftRows, rightRows).setOn(onExpression).holdLeft().call()
-}
-
-export function rightJoin(leftRows, rightRows, onExpression) {
-    return join(leftRows, rightRows).setOn(onExpression).holdRight().call()
-}
-
 const Side = {
     LEFT: 1,
     RIGHT: 2,
 }
 
-function join(leftRows, rightRows) {
+export function join(leftRows, rightRows) {
     return {
         _nearRows: leftRows,
         _farRows: rightRows,
