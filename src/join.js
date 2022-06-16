@@ -41,8 +41,9 @@ function join(leftRows, rightRows) {
     return {
         _nearRows: leftRows,
         _farRows: rightRows,
-        _onExpression: trueOn(),
+        _onExpression: false,
         _hold: false,
+        _result: [],
 
         setOn(expression) {
             this._onExpression = expression
@@ -67,46 +68,67 @@ function join(leftRows, rightRows) {
         },
 
         call() {
-            const result = []
+            this._result = []
+            let next
 
-            this._nearRows.forEach((nearRow) => {
-                let holded = nearRow
+            if (this._onExpression === false) {
+                next = this._join
+            } else if (this._hold === Side.RIGHT) {
+                next = this._JoinOnWithSwappedArgs
+            } else {
+                next = this._joinOn
+            }
 
-                this._farRows.forEach((farRow) => {
-                    let leftRow = nearRow
-                    let rightRow = farRow
+            let callback = this._nearRowsCallback
 
-                    if (this._hold === Side.RIGHT) {
-                        leftRow = farRow
-                        rightRow = nearRow
-                    }
+            if (this._hold) {
+                callback = this._holdCallback
+            }
 
-                    if (this._onExpression.call(leftRow, rightRow)) {
-                        result.push({
-                            ...leftRow,
-                            ...rightRow,
-                        })
+            this._foreach(this._nearRows, callback, [next])
 
-                        holded = false
-                    }
-                })
-
-                if (this._hold && holded) {
-                    result.push({
-                        ...holded,
-                    })
-                }
-            })
-
-            return result
+            return this._result
         },
-    }
-}
 
-function trueOn() {
-    return {
-        call() {
-            return true
+        _holdCallback(callback, nearRow) {
+            if (this._nearRowsCallback(callback, nearRow) === false) {
+                this._push({ ...nearRow })
+            }
+        },
+
+        _nearRowsCallback(callback, nearRow) {
+            return this._foreach(this._farRows, callback, [nearRow])
+        },
+
+        _foreach(rows, callback, args = []) {
+            let success = false
+
+            for (let index = 0; index < rows.length; index++) {
+                success = callback.call(this, ...args, rows[index]) || success
+            }
+
+            return success
+        },
+
+        _JoinOnWithSwappedArgs(b, a) {
+            return this._joinOn(a, b)
+        },
+
+        _joinOn(a, b) {
+            return this._onExpression.call(a, b)
+                && this._join(a, b)
+        },
+
+        _join(a, b) {
+            return this._push(this._merge(a, b))
+        },
+
+        _push(a) {
+            return this._result.push(a)
+        },
+
+        _merge(a, b) {
+            return { ...a, ...b }
         },
     }
 }
