@@ -67,14 +67,14 @@ export function join(leftRows, rightRows) {
 
         _planning() {
             this._nearAction = (nearRow) => this._farLoop(this._farRows, nearRow)
-            this._farAction = this._join
+            this._farAction = (a, b) => this._result.push({ ...a, ...b })
 
             if (this._onExpression) {
-                this._farAction = this._joinOn
+                this._farAction = this._on(this._farAction)
             }
 
             if (this._outerSide === Side.RIGHT) {
-                this._farAction = this._JoinOnWithSwappedArgs
+                this._farAction = this._swapArgs(this._farAction)
             }
 
             if (this._outerSide !== Side.NONE) {
@@ -89,7 +89,7 @@ export function join(leftRows, rightRows) {
         },
 
         _outer(action) {
-            return (nearRow) => action(nearRow) || this._push({ ...nearRow })
+            return (nearRow) => action(nearRow) || this._result.push({ ...nearRow })
         },
 
         _farLoop(rows, nearRow) {
@@ -102,25 +102,12 @@ export function join(leftRows, rightRows) {
             return success
         },
 
-        _JoinOnWithSwappedArgs(b, a) {
-            return this._joinOn(a, b)
+        _swapArgs(action) {
+            return (a, b) => action(b, a)
         },
 
-        _joinOn(a, b) {
-            return this._onExpression.call(a, b)
-                && this._join(a, b)
-        },
-
-        _join(a, b) {
-            return this._push(this._merge(a, b))
-        },
-
-        _push(a) {
-            return this._result.push(a)
-        },
-
-        _merge(a, b) {
-            return { ...a, ...b }
+        _on(action) {
+            return (a, b) => this._onExpression.call(a, b) && action(a, b)
         },
     }
 }
