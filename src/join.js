@@ -23,13 +23,14 @@ const Side = {
 
 export function join(leftRows, rightRows) {
     return {
-        _nearRows: leftRows,
-        _farRows: rightRows,
         _onExpression: false,
         _hold: false,
-        _result: [],
+
+        _nearRows: leftRows,
+        _farRows: rightRows,
         _nearAction: null,
         _farAction: null,
+        _result: [],
 
         setOn(expression) {
             this._onExpression = expression
