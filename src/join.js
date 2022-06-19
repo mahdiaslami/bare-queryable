@@ -17,6 +17,7 @@ export function on(returnValue) {
 }
 
 const Side = {
+    NONE: 0,
     LEFT: 1,
     RIGHT: 2,
 }
@@ -24,7 +25,7 @@ const Side = {
 export function join(leftRows, rightRows) {
     return {
         _onExpression: false,
-        _hold: false,
+        _outerSide: Side.NONE,
 
         _nearRows: leftRows,
         _farRows: rightRows,
@@ -39,13 +40,13 @@ export function join(leftRows, rightRows) {
         },
 
         holdLeft() {
-            this._hold = Side.LEFT
+            this._outerSide = Side.LEFT
 
             return this
         },
 
         holdRight() {
-            this._hold = Side.RIGHT
+            this._outerSide = Side.RIGHT
 
             const temp = this._nearRows
             this._nearRows = this._farRows
@@ -72,11 +73,11 @@ export function join(leftRows, rightRows) {
                 this._farAction = this._joinOn
             }
 
-            if (this._hold === Side.RIGHT) {
+            if (this._outerSide === Side.RIGHT) {
                 this._farAction = this._JoinOnWithSwappedArgs
             }
 
-            if (this._hold) {
+            if (this._outerSide !== Side.NONE) {
                 this._nearAction = this._holdAction
             }
         },
