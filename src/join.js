@@ -33,7 +33,7 @@ export function join(leftRows, rightRows) {
         _farAction: null,
         _result: [],
 
-        setOn(expression) {
+        on(expression) {
             this._onExpression = expression
 
             return this

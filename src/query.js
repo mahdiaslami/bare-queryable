@@ -92,7 +92,7 @@ function query(array) {
         join(rightRows) {
             const onExpression = on(this)
 
-            this._joinCallback = (leftRows) => join(leftRows, rightRows).setOn(onExpression).call()
+            this._joinCallback = (leftRows) => join(leftRows, rightRows).on(onExpression).call()
 
             return onExpression
         },
@@ -101,7 +101,7 @@ function query(array) {
             const onExpression = on(this)
 
             this._joinCallback = (leftRows) => join(leftRows, rightRows)
-                .setOn(onExpression).leftOuter().call()
+                .on(onExpression).leftOuter().call()
 
             return onExpression
         },
@@ -110,7 +110,7 @@ function query(array) {
             const onExpression = on(this)
 
             this._joinCallback = (leftRows) => join(leftRows, rightRows)
-                .setOn(onExpression).rightOuter().call()
+                .on(onExpression).rightOuter().call()
 
             return onExpression
         },
