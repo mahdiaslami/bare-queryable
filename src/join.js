@@ -66,7 +66,7 @@ export function join(leftRows, rightRows) {
         },
 
         _planning() {
-            this._nearAction = (nearRow) => this._farLoop(this._farRows, nearRow)
+            this._nearAction = (near) => this._farLoop(this._farRows, near)
             this._farAction = (a, b) => this._result.push({ ...a, ...b })
 
             if (this._onExpression) {
@@ -89,14 +89,14 @@ export function join(leftRows, rightRows) {
         },
 
         _outer(action) {
-            return (nearRow) => action(nearRow) || this._result.push({ ...nearRow })
+            return (near) => action(near) || this._result.push({ ...near })
         },
 
-        _farLoop(rows, nearRow) {
+        _farLoop(rows, near) {
             let success = false
 
             for (let index = 0; index < rows.length; index++) {
-                success = this._farAction.call(this, nearRow, rows[index]) || success
+                success = this._farAction.call(this, near, rows[index]) || success
             }
 
             return success
