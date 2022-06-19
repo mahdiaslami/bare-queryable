@@ -70,15 +70,15 @@ export function join(leftRows, rightRows) {
             this._farAction = (a, b) => this._result.push({ ...a, ...b })
 
             if (this._onExpression) {
-                this._farAction = this._on(this._farAction)
+                this._farAction = this._onWrapper(this._farAction)
             }
 
             if (this._outerSide === Side.RIGHT) {
-                this._farAction = this._swapArgs(this._farAction)
+                this._farAction = this._swapArgsWrapper(this._farAction)
             }
 
             if (this._outerSide !== Side.NONE) {
-                this._nearAction = this._outer(this._nearAction)
+                this._nearAction = this._outerWrapper(this._nearAction)
             }
         },
 
@@ -88,7 +88,7 @@ export function join(leftRows, rightRows) {
             }
         },
 
-        _outer(action) {
+        _outerWrapper(action) {
             return (near) => action(near) || this._result.push({ ...near })
         },
 
@@ -102,11 +102,11 @@ export function join(leftRows, rightRows) {
             return success
         },
 
-        _swapArgs(action) {
+        _swapArgsWrapper(action) {
             return (a, b) => action(b, a)
         },
 
-        _on(action) {
+        _onWrapper(action) {
             return (a, b) => this._onExpression.call(a, b) && action(a, b)
         },
     }
