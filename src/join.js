@@ -66,7 +66,7 @@ export function join(leftRows, rightRows) {
         },
 
         _planning() {
-            this._nearAction = this._noneAction
+            this._nearAction = (nearRow) => this._farLoop(this._farRows, nearRow)
             this._farAction = this._join
 
             if (this._onExpression) {
@@ -78,7 +78,7 @@ export function join(leftRows, rightRows) {
             }
 
             if (this._outerSide !== Side.NONE) {
-                this._nearAction = this._holdAction
+                this._nearAction = this._outer(this._nearAction)
             }
         },
 
@@ -88,14 +88,8 @@ export function join(leftRows, rightRows) {
             }
         },
 
-        _holdAction(nearRow) {
-            if (this._noneAction(nearRow) === false) {
-                this._push({ ...nearRow })
-            }
-        },
-
-        _noneAction(nearRow) {
-            return this._farLoop(this._farRows, nearRow)
+        _outer(action) {
+            return (nearRow) => action(nearRow) || this._push({ ...nearRow })
         },
 
         _farLoop(rows, nearRow) {
