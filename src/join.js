@@ -65,15 +65,17 @@ export function join(leftRows, rightRows) {
         },
 
         _planning() {
-            if (this._onExpression === false) {
-                this._farAction = this._join
-            } else if (this._hold === Side.RIGHT) {
-                this._farAction = this._JoinOnWithSwappedArgs
-            } else {
+            this._nearAction = this._noneAction
+            this._farAction = this._join
+
+            if (this._onExpression) {
                 this._farAction = this._joinOn
             }
 
-            this._nearAction = this._noneAction
+            if (this._hold === Side.RIGHT) {
+                this._farAction = this._JoinOnWithSwappedArgs
+            }
+
             if (this._hold) {
                 this._nearAction = this._holdAction
             }
