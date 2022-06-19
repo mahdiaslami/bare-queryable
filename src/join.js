@@ -28,6 +28,8 @@ export function join(leftRows, rightRows) {
         _onExpression: false,
         _hold: false,
         _result: [],
+        _nearAction: null,
+        _farAction: null,
 
         setOn(expression) {
             this._onExpression = expression
@@ -53,42 +55,46 @@ export function join(leftRows, rightRows) {
 
         call() {
             this._result = []
-            let next
 
             if (this._onExpression === false) {
-                next = this._join
+                this._farAction = this._join
             } else if (this._hold === Side.RIGHT) {
-                next = this._JoinOnWithSwappedArgs
+                this._farAction = this._JoinOnWithSwappedArgs
             } else {
-                next = this._joinOn
+                this._farAction = this._joinOn
             }
 
-            let callback = this._nearRowsCallback
-
+            this._nearAction = this._noneAction
             if (this._hold) {
-                callback = this._holdCallback
+                this._nearAction = this._holdAction
             }
 
-            this._foreach(this._nearRows, callback, [next])
+            this._nearLoop(this._nearRows)
 
             return this._result
         },
 
-        _holdCallback(callback, nearRow) {
-            if (this._nearRowsCallback(callback, nearRow) === false) {
+        _nearLoop(rows) {
+            for (let index = 0; index < rows.length; index++) {
+                this._nearAction.call(this, rows[index])
+            }
+        },
+
+        _holdAction(nearRow) {
+            if (this._noneAction(nearRow) === false) {
                 this._push({ ...nearRow })
             }
         },
 
-        _nearRowsCallback(callback, nearRow) {
-            return this._foreach(this._farRows, callback, [nearRow])
+        _noneAction(nearRow) {
+            return this._farLoop(this._farRows, nearRow)
         },
 
-        _foreach(rows, callback, args = []) {
+        _farLoop(rows, nearRow) {
             let success = false
 
             for (let index = 0; index < rows.length; index++) {
-                success = callback.call(this, ...args, rows[index]) || success
+                success = this._farAction.call(this, nearRow, rows[index]) || success
             }
 
             return success
