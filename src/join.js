@@ -39,13 +39,13 @@ export function join(leftRows, rightRows) {
             return this
         },
 
-        holdLeft() {
+        leftOuter() {
             this._outerSide = Side.LEFT
 
             return this
         },
 
-        holdRight() {
+        rightOuter() {
             this._outerSide = Side.RIGHT
 
             const temp = this._nearRows
