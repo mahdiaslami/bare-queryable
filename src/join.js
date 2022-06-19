@@ -57,6 +57,14 @@ export function join(leftRows, rightRows) {
         call() {
             this._result = []
 
+            this._planning()
+
+            this._nearLoop(this._nearRows)
+
+            return this._result
+        },
+
+        _planning() {
             if (this._onExpression === false) {
                 this._farAction = this._join
             } else if (this._hold === Side.RIGHT) {
@@ -69,10 +77,6 @@ export function join(leftRows, rightRows) {
             if (this._hold) {
                 this._nearAction = this._holdAction
             }
-
-            this._nearLoop(this._nearRows)
-
-            return this._result
         },
 
         _nearLoop(rows) {
