@@ -1,6 +1,9 @@
 Query on array
 ==============
 
+<a href="https://www.npmjs.com/package/bare-queryable"><img src="https://img.shields.io/npm/v/bare-queryable?label=version" alt="Version"></a>
+<a href="https://npmcharts.com/compare/bare-queryable?minimal=true"><img src="https://img.shields.io/npm/dm/bare-queryable" alt="Downloads"></a>
+
 bare-queryable help you to query on an array of objects as SQL way.
 
 In the usual way, you need to create a callback method for javascript array helpers like filter() and etc, But here you only do what you need.
