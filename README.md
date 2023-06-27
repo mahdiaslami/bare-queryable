@@ -179,3 +179,72 @@ A callback that can compare two strings.
 - #### _NUMBER_COMPARATOR_
 
 A callback that can compare two numbers.
+
+### Join
+
+Join to arrays
+
+- #### _crossJoin(array)_
+
+Cross join two array.
+
+```javascript
+query([...])
+  .crossJoin([...])
+  .get()
+```
+
+- #### _join(array)_
+
+Inner join two array, both way is correct.
+
+```javascript
+query(nearArray)
+  .join(farArray)
+    .on('farArrayId').col.equal('nearArrayId')
+  .get()
+
+query(nearArray)
+  .innerJoin(farArray)
+    .on('farArrayId').col.equal('nearArrayId')
+  .get()
+```
+
+- #### _leftJoin(array)_
+
+Left join two array.
+
+```javascript
+query(nearArray)
+  .leftJoin(farArray)
+    .on('farArrayId').col.equal('nearArrayId')
+  .get()
+```
+
+- #### _rightJoin(array)_
+
+Right join two array.
+
+```javascript
+query(nearArray)
+  .rightJoin(farArray)
+    .on('farArrayId').col.equal('nearArrayId')
+  .get()
+```
+
+- #### _on(column)_
+
+Column parameter of `on(column)` method have to belong to
+array that injected to `join(array)` method. and column parameter of condition method (for example `equal`) have to belong to array that injected to `query(array)` method.
+
+All condition that used in where expression work in on expression too.
+
+```javascript
+query(nearArray)
+  .leftJoin(farArray)
+    .on('farArrayId').col.equal('nearArrayId')
+  .get()
+```
+
+TODO: how user can use nearColumn in on method
+TODO: how can have two condition between two array column
